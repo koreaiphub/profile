@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        
+        /* 스크롤 진행률 바 스타일 */
         #scroll-progress {
             position: fixed;
             top: 64px;
@@ -19,23 +21,51 @@
             z-index: 60;
             transition: width 0.1s ease-out;
         }
-        .chart-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; height: 350px; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+        }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .nav-link.active { color: #2563eb; font-weight: 700; }
+        
         .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
         .floating-btn { animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        
+        /* AI 어시스턴트 마크다운 렌더링 스타일 */
         .ai-result-content strong { color: #312e81; font-weight: 900; background-color: #e0e7ff; padding: 0 4px; border-radius: 4px; }
+        .ai-result-content p { margin-bottom: 0.75rem; line-height: 1.6; }
         .ai-result-content h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.125rem; font-weight: bold; color: #1e3a8a; border-bottom: 2px solid #e0e7ff; padding-bottom: 4px; }
+
+        /* 도식화 애니메이션 초기 상태 */
         .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body class="antialiased scroll-smooth">
 
+<!-- 스크롤 진행률 바 -->
 <div id="scroll-progress"></div>
 
 <nav class="fixed w-full z-50 bg-white/90 backdrop-blur border-b border-slate-200">
@@ -63,7 +93,7 @@
             <p class="text-amber-400 font-bold tracking-wider mb-4">특허경영 오케스트레이션 전문회사</p>
             <h1 class="text-4xl md:text-6xl font-black mb-6">내 기술 못베끼게 하는<br><span class="text-blue-400">강력 무기</span> 특허!</h1>
             <p class="text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-                아이피허브는 여러 악기가 모여 하나의 교향곡을 완성하듯,<br>기업의 사업 목표에 맞추어 특허 경영 전 과정을 지휘합니다.
+                아이피허브는 여러 악기가 모여 하나의 교향곡을 완성하듯,<br>기업의 사업 목표에 맞추어 특허 경영 전 과정을 지휘하고 관리합니다.
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#orchestration" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all">솔루션 보기</a>
@@ -72,30 +102,68 @@
         </div>
     </section>
 
-    <section id="ai-assistant" class="py-20 bg-indigo-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-slate-900 mb-4">AI 특허 어시스턴트</h2>
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col border border-indigo-200">
-                <div class="p-4 bg-slate-50 border-b overflow-x-auto flex gap-3">
-                    <button id="tab-idea" onclick="switchAITab('idea')" class="whitespace-nowrap px-4 py-2 rounded-lg text-sm font-bold bg-indigo-600 text-white shadow-md">아이디어 진단</button>
-                    <!-- (다른 버튼들 동일) -->
+    <!-- 섹션: AI 특허 어시스턴트 -->
+    <section id="ai-assistant" class="py-20 bg-indigo-50 border-t border-indigo-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">AI 특허 어시스턴트</h2>
+                <p class="text-lg text-slate-600 border-l-4 border-indigo-500 pl-4 mb-4">
+                    아이피허브의 특허 전략가 AI가 비즈니스 아이디어를 진단하고, 복잡한 특허 의견제출통지서에 대한 최적의 대응 논리를 제안합니다.
+                </p>
+            </div>
+
+            <!-- AI Assistant Container -->
+            <div class="bg-white rounded-2xl shadow-xl w-full overflow-hidden flex flex-col border border-indigo-200">
+                <div class="p-4 sm:p-5 bg-slate-50 border-b border-slate-200 shadow-inner">
+                    <div class="flex overflow-x-auto custom-scrollbar gap-3 pb-2" id="aiTabGroup">
+                        <button id="tab-idea" onclick="switchAITab('idea')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-indigo-600 text-white shadow-md ring-2 ring-indigo-600 ring-offset-2">아이디어 진단</button>
+                        <button id="tab-doc" onclick="switchAITab('doc')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">특허문서 해설</button>
+                        <button id="tab-qna" onclick="switchAITab('qna')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">미팅 질문 추출</button>
+                        <button id="tab-email" onclick="switchAITab('email')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">업무 이메일 초안</button>
+                        <button id="tab-logic" onclick="switchAITab('logic')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">반박 논리 제안</button>
+                        <button id="tab-scenario" onclick="switchAITab('scenario')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">대응 시나리오 비교</button>
+                        <button id="tab-simul" onclick="switchAITab('simul')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">심사관 시뮬레이션</button>
+                        <button id="tab-plan" onclick="switchAITab('plan')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">D-Day 플래너</button>
+                        <button id="tab-value" onclick="switchAITab('value')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">특허 가치 예측기</button>
+                    </div>
                 </div>
-                <div class="p-6 min-h-[400px]">
+
+                <div class="p-6 overflow-y-auto custom-scrollbar flex-grow bg-white min-h-[400px]">
                     <div id="view-idea" class="block">
-                        <textarea id="aiIdeaInput" rows="4" class="w-full p-3 border rounded-xl mb-3 text-sm" placeholder="비즈니스 아이디어를 입력하세요."></textarea>
-                        <button onclick="requestGemini('idea')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all">분석 시작하기</button>
+                        <textarea id="aiIdeaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 프리랜서 디자이너와 동네 카페를 연결해주고, 블록체인으로 대금을 안전하게 정산하는 플랫폼 모델"></textarea>
+                        <button onclick="requestGemini('idea')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">분석 시작하기</button>
                     </div>
-                    <!-- (기타 탭 생략) -->
-                    <div id="aiLoading" class="hidden flex flex-col items-center py-12">
+                    <div id="view-doc" class="hidden"><textarea id="aiDocInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="해설이 필요한 특허 문서 내용을 입력하세요."></textarea><button onclick="requestGemini('doc')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">해설 요청하기</button></div>
+                    <div id="view-qna" class="hidden"><textarea id="aiQnaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="상황에 맞는 핵심 질문을 추출해 드립니다."></textarea><button onclick="requestGemini('qna')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">질문 추출하기</button></div>
+                    <div id="view-email" class="hidden"><textarea id="aiEmailInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="변리사에게 보낼 거친 요지를 입력하세요."></textarea><button onclick="requestGemini('email')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">이메일 생성하기</button></div>
+                    <div id="view-logic" class="hidden"><textarea id="aiLogicInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="거절 이유에 대한 반박 논리를 세워드립니다."></textarea><button onclick="requestGemini('logic')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">논리 제안받기</button></div>
+                    <div id="view-scenario" class="hidden"><textarea id="aiScenarioInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="다각도의 대응 시나리오를 비교해 보세요."></textarea><button onclick="requestGemini('scenario')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">시나리오 비교</button></div>
+                    <div id="view-simul" class="hidden"><textarea id="aiSimulInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="심사관의 입장에서 논리를 검증해 보세요."></textarea><button onclick="requestGemini('simul')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">시뮬레이션 시작</button></div>
+                    <div id="view-plan" class="hidden"><textarea id="aiPlanInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="마감일에 맞춘 대응 플랜을 생성합니다."></textarea><button onclick="requestGemini('plan')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">플랜 생성하기</button></div>
+                    <div id="view-value" class="hidden"><textarea id="aiValueInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="특허의 미래 가치를 분석해 드립니다."></textarea><button onclick="requestGemini('value')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">가치 예측하기</button></div>
+
+                    <div id="aiLoading" class="hidden flex flex-col items-center justify-center py-8">
                         <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mb-4"></div>
-                        <p class="text-sm font-bold animate-pulse">분석 중...</p>
+                        <p class="text-indigo-800 font-bold text-sm animate-pulse">AI가 데이터를 심층 분석하고 있습니다...</p>
                     </div>
-                    <div id="aiResultArea" class="hidden mt-6 bg-slate-50 rounded-xl p-6 border">
-                        <div id="aiResultText" class="text-sm leading-relaxed"></div>
-                        <div class="mt-6 flex flex-col sm:flex-row gap-2">
-                            <button onclick="copyToClipboard()" class="flex-1 bg-white border border-indigo-200 py-2 rounded-lg text-xs font-bold">결과 복사</button>
-                            <button onclick="downloadAIResult()" class="flex-1 bg-slate-800 text-white py-2 rounded-lg text-xs font-bold">텍스트 저장</button>
-                            <button onclick="openAILeadModal()" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg text-xs font-bold">이메일 받기</button>
+
+                    <!-- 결과 출력 및 액션 영역 -->
+                    <div id="aiResultArea" class="hidden mt-6 bg-slate-50 border border-indigo-100 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
+                            <span class="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">AI 분석 결과</span>
+                            <button onclick="copyToClipboard()" class="text-xs text-indigo-600 font-bold flex items-center gap-1 hover:text-indigo-800 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                결과 텍스트 복사하기
+                            </button>
+                        </div>
+                        <div id="aiResultText" class="text-sm text-slate-700 ai-result-content"></div>
+                        <div class="mt-8 pt-5 border-t border-slate-200 text-center">
+                            <div class="flex flex-col sm:flex-row gap-2 mb-4">
+                                <button onclick="downloadAIResult()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">텍스트(.txt)로 저장</button>
+                                <button onclick="openAILeadModal()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">결과 리포트 이메일로 받기</button>
+                            </div>
+                            <p class="text-xs text-slate-500 text-center mb-4">본 분석은 AI 기반 초안이며, 법적 효력을 갖지 않습니다.</p>
+                            <button onclick="openDiagnosisFromAI()" class="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3 px-4 rounded-xl transition-all">IPHUB 전문가에게 무료 정밀 진단받기</button>
                         </div>
                     </div>
                 </div>
@@ -103,26 +171,278 @@
         </div>
     </section>
 
-    <!-- ... (기타 섹션 코드 유지) ... -->
+    <!-- 섹션: VOD 특허 교육 -->
+    <section id="education" class="py-20 bg-slate-800 text-white border-t border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">VOD 특허 교육</h2>
+            <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-10">특허경영 에반젤리스트 양성 과정을 통해 기업 내부 역량을 극대화하십시오.</p>
+            <div class="grid md:grid-cols-2 gap-12 items-center text-left">
+                <div class="space-y-4">
+                    <div class="bg-slate-700/50 p-4 rounded-xl border border-slate-600 flex items-start gap-4">
+                        <div class="bg-blue-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">1</div>
+                        <div><h4 class="font-bold">특허 마인드셋 및 권리화 기초</h4><p class="text-sm text-slate-400">발명의 기본 원리와 권리화 필수 요건 학습</p></div>
+                    </div>
+                    <div class="bg-slate-700/50 p-4 rounded-xl border border-slate-600 flex items-start gap-4">
+                        <div class="bg-blue-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">2</div>
+                        <div><h4 class="font-bold">실전 아이디어 도출 기법</h4><p class="text-sm text-slate-400">현업 업무에서 즉시 특허를 도출해 내는 방법론</p></div>
+                    </div>
+                    <div class="bg-slate-700/50 p-4 rounded-xl border border-slate-600 flex items-start gap-4">
+                        <div class="bg-blue-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">3</div>
+                        <div><h4 class="font-bold">BM 특허 설계 및 대응 전략</h4><p class="text-sm text-slate-400">플랫폼 및 서비스 모델에 특화된 특허 전략</p></div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-700 text-center shadow-lg h-full flex flex-col justify-center">
+                    <p class="text-slate-300 text-sm mb-6">전문 에반젤리스트가 안내하는 5단계 심화 커리큘럼을 확인하세요.</p>
+                    <a href="https://siphub.liveklass.com/" target="_blank" class="block bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all shadow-lg">온라인 VOD 수강 플랫폼 이동</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- 섹션: 오케스트레이션 -->
+    <section id="orchestration" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12">WHY IPHUB?</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-start mb-24">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">특허 등록 시 발생하는 이슈</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300">
+                            <button onclick="toggleAccordion('issue1', 'issue')" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                                <span>발굴의 부재 (핵심 자산 누락)</span><span id="icon-issue1">▼</span>
+                            </button>
+                            <div id="content-issue1" class="grid transition-all duration-300" style="grid-template-rows: 0fr;"><div class="overflow-hidden p-5 border-t text-sm text-slate-600 leading-relaxed">비즈니스 보호에 필수적인 핵심 아이디어가 발굴되지 못하고 사장되는 것을 방지합니다.</div></div>
+                        </div>
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300">
+                            <button onclick="toggleAccordion('issue2', 'issue')" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                                <span>전략 없는 출원 (좁은 권리 범위)</span><span id="icon-issue2">▼</span>
+                            </button>
+                            <div id="content-issue2" class="grid transition-all duration-300" style="grid-template-rows: 0fr;"><div class="overflow-hidden p-5 border-t text-sm text-slate-600 leading-relaxed">기업의 중장기 비전이 담기지 않은 특허는 경쟁사의 모방을 막지 못합니다.</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">기업의 구조적 애로사항</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden border-l-4 border-rose-500 transition-all duration-300">
+                            <button onclick="toggleAccordion('pain1', 'pain')" class="w-full text-left p-5 font-bold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                                <span>전략 부재로 인한 매몰 비용 발생</span><span id="icon-pain1">▼</span>
+                            </button>
+                            <div id="content-pain1" class="grid transition-all duration-300" style="grid-template-rows: 0fr;"><div class="overflow-hidden p-5 border-t text-sm text-slate-600 leading-relaxed">경쟁력 없는 건수 채우기 식 출원은 시간과 자금의 낭비인 매몰 비용(Sunk Cost)을 초래합니다.</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 특허경영 오케스트레이션 체계 도식 -->
+            <div class="mb-24" id="diagram-container">
+                <h3 class="text-2xl font-bold text-slate-800 mb-8 border-b pb-2 text-center">특허경영 오케스트레이션 체계</h3>
+                <div class="bg-slate-50 rounded-2xl border p-8 md:p-12 flex flex-col items-center gap-4 relative overflow-hidden">
+                    <div class="w-full max-w-lg bg-white border-2 border-slate-200 rounded-xl p-5 text-center shadow-sm animate-on-scroll" id="box-1">
+                        <h4 class="font-bold text-slate-800">고객사 (스타트업/중소벤처기업)</h4>
+                        <p class="text-xs text-slate-500 mt-1">비즈니스 목표 설정 및 기술 제공</p>
+                    </div>
+                    <div class="h-8 w-0.5 bg-blue-200 animate-on-scroll" style="transition-delay: 200ms;"></div>
+                    <div class="w-full max-w-xl bg-blue-600 border-2 border-blue-700 rounded-xl p-6 text-center shadow-xl transform scale-105 animate-on-scroll" style="transition-delay: 400ms;" id="box-2">
+                        <h4 class="font-bold text-white text-lg">아이피허브 (특허경영 지휘자)</h4>
+                        <p class="text-xs text-blue-100 mt-1">기술-법률 언어 통번역 및 전체 전략 지휘</p>
+                    </div>
+                    <div class="h-8 w-0.5 bg-blue-200 animate-on-scroll" style="transition-delay: 600ms;"></div>
+                    <div class="w-full max-w-lg bg-white border-2 border-slate-200 rounded-xl p-5 text-center shadow-sm animate-on-scroll" style="transition-delay: 800ms;" id="box-3">
+                        <h4 class="font-bold text-slate-800">전담 특허사무소 (대리인)</h4>
+                        <p class="text-xs text-slate-500 mt-1">특허 행정 절차 대리 및 명세서 작성</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b pb-2">고객의 부담을 최소화하다</h3>
+                <div class="bg-white rounded-xl border overflow-hidden shadow-sm">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-800 text-white font-bold"><tr><th class="p-4">진행 단계</th><th class="p-4">고객</th><th class="p-4">아이피허브</th></tr></thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-4 font-bold">기획/발굴</td><td class="p-4">아이디어 공유</td><td class="p-4 bg-blue-50/50 font-medium">비즈니스 진단, 선행조사, 회피설계</td></tr>
+                            <tr class="border-b"><td class="p-4 font-bold">특허 출원</td><td class="p-4">초안 확인</td><td class="p-4 bg-blue-50/50 font-medium">명세서 품질 검증 및 출원 지휘</td></tr>
+                            <tr><td class="p-4 font-bold">심사 대응</td><td class="p-4">의사 결정</td><td class="p-4 bg-blue-50/50 font-medium">대응 논리 개발 및 답변 검토</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션: 핵심 전략 (아코디언 형태) -->
+    <section id="strategy" class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">스타트업 성장 심화 솔루션</h2>
+            <div class="bg-white rounded-2xl p-6 border shadow-sm mt-12">
+                <div class="space-y-4">
+                    <div class="bg-slate-50 rounded-xl border overflow-hidden transition-all duration-300">
+                        <button onclick="toggleAccordion('strat1', 'strat')" class="w-full text-left p-5 font-bold flex justify-between items-center hover:bg-slate-100">
+                            <span>1. 투자 유치(VC)를 위한 IP 포트폴리오 구축</span><span id="icon-strat1">▼</span>
+                        </button>
+                        <div id="content-strat1" class="grid transition-all duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden p-6 border-t bg-white text-sm text-slate-700 leading-relaxed">
+                                핵심 원천 기술을 보호하기 위한 주변 기술 및 개량 기술 다수 출원을 통해 강력한 특허망을 형성, 기업 가치를 극대화합니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션: 압도적 성과 -->
+    <section id="performance" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-slate-900 mb-16">수치로 증명하는 압도적 성과</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">대한민국 평균을 뛰어넘는 등록률</h3>
+                    <p class="text-slate-600 mb-6">아이피허브는 전문가 조직을 투입하여 최상의 등록 성공률을 만들어냅니다.</p>
+                    <ul class="space-y-4 mb-8 text-slate-700">
+                        <li>일반 특허 등록률 <strong class="text-blue-700 text-xl">95%</strong> (국가 평균 65%)</li>
+                        <li>AI 분야 특허 등록률 <strong class="text-blue-700 text-xl">100%</strong> (국가 평균 59%)</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl shadow-md border border-slate-100 h-[350px]">
+                    <canvas id="registrationRateChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 서비스 도입 기업 사례 (아코디언 + CTA) -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-bold mb-8 border-l-4 border-blue-500 pl-3">기업 성공 스토리</h3>
+                <div class="grid md:grid-cols-3 gap-6 items-start">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300">
+                        <button onclick="toggleAccordion('case1', 'case')" class="w-full text-left p-5 hover:bg-slate-50 transition-colors flex flex-col focus:outline-none">
+                            <div class="flex items-center justify-between w-full mb-3">
+                                <h4 class="text-xl font-bold text-blue-900">A사 (S/W)</h4><span id="icon-case1">▼</span>
+                            </div>
+                            <div class="bg-blue-50 rounded p-3 text-center text-blue-800 font-bold text-sm">시리즈 A 투자 유치</div>
+                        </button>
+                        <div id="content-case1" class="grid transition-all duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden p-5 border-t text-sm text-slate-600 leading-relaxed">
+                                특허 0건에서 출발하여 4년 만에 111건 등록 성공. 강력한 IP 보호망을 바탕으로 투자자들의 신뢰를 확보했습니다.
+                                <a href="#pdf-download" class="mt-4 inline-flex items-center gap-2 text-blue-600 font-bold border-b border-blue-600 pb-1">리포트 다운로드</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 분야별 실적 검색 필터 -->
+            <div id="dbSection">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
+                    <h3 class="text-2xl font-bold border-l-4 border-slate-800 pl-3">분야별 서비스 도입 실적</h3>
+                    <div class="relative w-full sm:w-80 mt-4 sm:mt-0">
+                        <input type="text" id="dbSearchInput" placeholder="기술 키워드 검색..." class="block w-full pl-4 pr-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none sm:text-sm shadow-sm">
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-6" id="dbListContainer">
+                    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div class="bg-blue-800 text-white py-3 px-4 font-bold">ICT & 핀테크</div>
+                        <div class="h-64 overflow-y-auto custom-scrollbar p-4">
+                            <ul class="space-y-2 text-sm text-slate-700">
+                                <li class="pb-2 border-b db-item flex justify-between"><span>진로체험 관리</span><span class="text-slate-400 text-xs">등록 완료</span></li>
+                                <li class="pb-2 border-b db-item flex justify-between"><span>동산 담보관리</span><span class="text-slate-400 text-xs">등록 완료</span></li>
+                                <li class="pb-2 border-b db-item flex justify-between"><span>NFT 플랫폼</span><span class="text-slate-400 text-xs">등록 완료</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- (다른 리스트들 동일) -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션: 조직 & 서비스 -->
+    <section id="about" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-12">조직 & 서비스</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <h4 class="font-bold text-blue-400 mb-4 border-b border-slate-700 pb-2">ICT.AI 팀</h4>
+                    <p class="text-sm text-slate-300">변리사 2명 / 엔지니어 4명 구성. 인공지능, 메타버스, 핀테크 전문.</p>
+                </div>
+                <!-- ... -->
+            </div>
+        </div>
+    </section>
 </main>
 
+<!-- 게이티드 콘텐츠 모달 (리드 수집) -->
+<div id="aiLeadModal" class="fixed inset-0 z-[140] hidden flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="px-6 py-4 border-b bg-indigo-50 flex justify-between items-center"><h3 class="font-bold">리포트 전송 신청</h3><button onclick="closeAILeadModal()" class="text-2xl">&times;</button></div>
+        <div class="p-6">
+            <form id="aiLeadForm" class="space-y-4">
+                <input type="text" id="aiLeadCompany" placeholder="기업명" class="w-full p-2 border rounded-lg">
+                <input type="text" id="aiLeadName" placeholder="성함" required class="w-full p-2 border rounded-lg">
+                <input type="email" id="aiLeadEmail" placeholder="이메일 주소" required class="w-full p-2 border rounded-lg">
+                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg">이메일로 분석 결과 받기</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-    // 스크롤 및 애니메이션 공통 로직
+    // 1. 스크롤 진행률 바 로직
     window.addEventListener('scroll', () => {
         const winScroll = document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         document.getElementById('scroll-progress').style.width = (winScroll / height * 100) + '%';
     });
 
+    // 2. 도식화 순차 애니메이션 (Intersection Observer)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if(entry.isIntersecting) entry.target.querySelectorAll('.animate-on-scroll').forEach(el => el.classList.add('visible')); });
     }, { threshold: 0.1 });
 
     document.addEventListener('DOMContentLoaded', () => {
-        const diagram = document.getElementById('ai-assistant'); // 관찰 대상
+        const diagram = document.getElementById('diagram-container');
         if(diagram) observer.observe(diagram);
+        
+        // 차트 초기화
+        const ctx = document.getElementById('registrationRateChart')?.getContext('2d');
+        if(ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['일반 특허', 'AI 특허'],
+                    datasets: [{ label: 'IPHUB', data: [95, 100], backgroundColor: '#2563eb' }, { label: '평균', data: [65, 59], backgroundColor: '#cbd5e1' }]
+                },
+                options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+        }
+        
+        // 검색 필터 로직
+        const searchInput = document.getElementById('dbSearchInput');
+        if(searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                document.querySelectorAll('.db-item').forEach(item => {
+                    item.style.display = item.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
+                });
+            });
+        }
     });
+
+    // 3. 아코디언 로직 (Auto-Collapse 포함)
+    function toggleAccordion(id, group) {
+        const target = document.getElementById('content-' + id);
+        const icon = document.getElementById('icon-' + id);
+        if(group) {
+            document.querySelectorAll(`[id^="content-${group}"]`).forEach(c => { if(c.id !== target.id) c.style.gridTemplateRows = '0fr'; });
+            document.querySelectorAll(`[id^="icon-${group}"]`).forEach(i => { if(i.id !== icon.id) i.style.transform = 'rotate(0deg)'; });
+        }
+        const isOpen = target.style.gridTemplateRows === '1fr';
+        target.style.gridTemplateRows = isOpen ? '0fr' : '1fr';
+        icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
 
     // 클립보드 복사
     function copyToClipboard() {
@@ -133,13 +453,33 @@
         temp.select();
         document.execCommand('copy');
         document.body.removeChild(temp);
-        alert("복사되었습니다.");
+        alert("분석 결과가 복사되었습니다.");
     }
 
-    // AI 서비스 핵심 로직 (에러 핸들링 강화)
+    // --- AI 서비스 핵심 로직 ---
+    const apiKey = ""; // 런타임에서 주입되도록 반드시 빈 스트링으로 유지
+    window.currentAIType = 'idea';
+
+    function switchAITab(type) {
+        window.currentAIType = type;
+        const tabs = ['idea', 'doc', 'qna', 'email', 'logic', 'scenario', 'simul', 'plan', 'value'];
+        tabs.forEach(t => {
+            const btn = document.getElementById(`tab-${t}`);
+            const view = document.getElementById(`view-${t}`);
+            if(t === type) {
+                btn.className = "whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white shadow-md ring-2 ring-indigo-600 ring-offset-2";
+                view.classList.remove('hidden');
+            } else {
+                btn.className = "whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50";
+                view.classList.add('hidden');
+            }
+        });
+    }
+
     async function requestGemini(type) {
-        const input = document.getElementById('aiIdeaInput').value.trim();
-        if(!input) return alert("내용을 입력하세요.");
+        const inputMap = { 'idea': 'aiIdeaInput', 'doc': 'aiDocInput', 'qna': 'aiQnaInput', 'email': 'aiEmailInput', 'logic': 'aiLogicInput', 'scenario': 'aiScenarioInput', 'simul': 'aiSimulInput', 'plan': 'aiPlanInput', 'value': 'aiValueInput' };
+        const userInput = document.getElementById(inputMap[type])?.value.trim();
+        if(!userInput) return alert("분석할 내용을 입력하세요.");
 
         const loading = document.getElementById('aiLoading');
         const area = document.getElementById('aiResultArea');
@@ -149,24 +489,20 @@
         area.classList.add('hidden');
 
         try {
-            const result = await fetchGeminiWithRetry(input, "당신은 아이피허브의 전문가입니다.");
-            text.innerHTML = result.replace(/\n/g, '<br>');
+            const systemPrompt = `당신은 아이피허브(IPHUB)의 수석 특허 전략가입니다. 항목(${type})에 맞춰 비즈니스 아이디어를 진단하고 차별화된 전략을 1.핵심 포인트 2.전략적 제언 3.기대효과 순으로 전문적인 어조로 답변하세요.`;
+            const result = await fetchGeminiWithRetry(userInput, systemPrompt);
+            text.innerHTML = result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
             loading.classList.add('hidden');
             area.classList.remove('hidden');
         } catch (e) {
-            console.error(e);
             loading.classList.add('hidden');
-            let msg = "네트워크 지연이 발생했습니다. 다시 시도해 주세요.";
-            if(e.message.includes("403")) msg = "인증 오류(403): API Key 설정이 필요하거나 권한이 거부되었습니다.";
-            text.innerHTML = `<span class="text-red-500 font-bold">${msg}</span>`;
             area.classList.remove('hidden');
+            text.innerHTML = `<span class='text-red-500 font-bold'>네트워크 지연으로 AI 분석에 실패했습니다. (Error: ${e.message}) 다시 시도해 주세요.</span>`;
         }
     }
 
     async function fetchGeminiWithRetry(userPrompt, systemPrompt) {
-        const apiKey = "AIzaSyAnL0V3vndTskdhVQKwzpnQ4FxOqb_RH3Q"; // 런타임 주입 또는 수동 기입 필요
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-        
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -176,14 +512,22 @@
             })
         });
 
-        if(!response.ok) throw new Error(`HTTP ${response.status}`);
+        if(!response.ok) throw new Error(`${response.status}`);
         const json = await response.json();
         return json.candidates[0].content.parts[0].text;
     }
 
-    function switchAITab(type) {
-        window.currentAIType = type;
-        // 탭 UI 전환 로직...
+    function openAILeadModal() { document.getElementById('aiLeadModal').classList.remove('hidden'); }
+    function closeAILeadModal() { document.getElementById('aiLeadModal').classList.add('hidden'); }
+
+    // 리포트 저장 (.txt)
+    function downloadAIResult() {
+        const content = `[IPHUB AI 분석 리포트]\n\n${document.getElementById('aiResultText').innerText}`;
+        const blob = new Blob([content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `IPHUB_Report_${new Date().getTime()}.txt`;
+        a.click();
     }
 </script>
 </body>
