@@ -160,7 +160,7 @@
                     </div>
 
                     <div id="view-search" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">발명 내용을 입력하시면 이와 유사한 가상의 선행 특허 문헌 3건을 검색하여 차이점을 분석하고, 실제 데이터베이스에서 활용할 수 있는 검색식을 제안해 드립니다.</p>
+                        <p class="text-sm text-slate-600 mb-4 font-medium">발명 내용을 입력하시면 이와 유사한 가상의 선행 특허 문헌 10건을 검색하여 차이점을 분석하고, 실제 데이터베이스에서 활용할 수 있는 검색식을 제안해 드립니다.</p>
                         <textarea id="aiSearchInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 드론을 이용해 고층 빌딩의 외벽 균열을 자동으로 촬영하고 AI로 분석하는 시스템"></textarea>
                         <button onclick="requestGemini('search')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">선행기술 검색 시작</button>
                     </div>
@@ -980,7 +980,7 @@
 
 <script>
     // [보안 설정] 프록시 우회용 URL
-    const PROXY_URL = "https://script.google.com/macros/s/AKfycbyb12Ye-HRh_1GWYYJjLn8W-tCdXfOF5OzxCvXLiGmX0lrlNBD9flqaO8ybWLcXAiQW/exec";
+    const PROXY_URL = "https://script.google.com/macros/s/AKfycbwagFyl23gtE9-Shr-UBJV_B85N9vDHD5ZFU9flOL9YopN-MBTUrwl0tiVQ26Y3sdL7/exec";
     const SHARED_SECRET = "IPHUB_SECURE_TOKEN_2026_!@#"; 
     const apiKey = ""; // Canvas 환경에서 자동 주입됨
 
@@ -1164,7 +1164,7 @@
         switch(type) {
             case 'idea': systemPrompt = "당신은 아이피허브 수석 특허 전략가입니다. 1. 핵심 기술 포인트 2. 추천 출원 전략 3. 예상 방어 효과를 마크다운으로 답변하세요."; break;
             case 'trademark': systemPrompt = "당신은 상표권 전문 변리사입니다. 사용자가 입력한 상표명과 지정상품/서비스를 바탕으로 다음을 마크다운으로 분석해 주세요. 1. 상표의 식별력(보통명칭, 기술적 표장 여부 등) 검토 2. 유사 상표 존재 위험성 및 등록 가능성 예측 3. 성공적인 상표 등록을 위한 우회 전략 및 조언. 단, 본 분석은 1차적 검토이며 법적 효력이 없음을 명시하세요."; break;
-            case 'search': systemPrompt = "당신은 선행기술조사 전문 변리사입니다. 사용자의 발명 내용을 바탕으로, 가장 유사할 것으로 예상되는 가상의 선행 특허 문헌 3건(발명의 명칭, 요약, 핵심 차이점)을 검색 결과 형식으로 제시해 주세요. 또한 KIPRIS 등 실제 데이터베이스에서 검색 시 활용할 수 있는 추천 불리언 검색식(Boolean Query)과 추천 IPC 분류 코드를 함께 제공해 주세요. 마크다운으로 정리해 주세요."; break;
+            case 'search': systemPrompt = "당신은 선행기술조사 전문 변리사입니다. 사용자의 발명 내용을 바탕으로, 가장 유사할 것으로 예상되는 가상의 선행 특허 문헌 10건(발명의 명칭, 요약, 핵심 차이점)을 검색 결과 형식으로 제시해 주세요. 또한 KIPRIS 등 실제 데이터베이스에서 검색 시 활용할 수 있는 추천 불리언 검색식(Boolean Query)과 추천 IPC 분류 코드를 함께 제공해 주세요. 마크다운으로 정리해 주세요."; break;
             case 'draft': systemPrompt = "전문 변리사로서 입력된 아이디어의 특허 명세서 초안을 표준 구조에 맞춰 상세하게 작성하세요."; break;
             case 'bypass': systemPrompt = "특허 공격 전략가로서 경쟁 기술을 회피하거나 독점력을 높일 대안 설계를 제안하세요."; break;
             case 'simul': systemPrompt = "당신은 깐깐한 특허청 수석 특허심사관입니다. 사용자의 주장이나 발명 내용을 보고 타당성, 맹점, 예상 거절 이유(신규성, 진보성 결여 등), 이를 극복하기 위한 보완 가이드를 날카롭게 피드백해 주세요. 마크다운을 적용하세요."; break;
@@ -1513,7 +1513,26 @@
                 btn.disabled = true;
                 btn.innerText = "전송 중...";
 
-                const userInputText = document.getElementById('aiIdeaInput')?.value || "입력값 없음";
+                // [에러 수정] DOM 조회 대신 전역 변수를 활용하여 활성화된 탭 식별 (null 충돌 방지)
+                const activeTabId = window.currentAIType || 'idea';
+                
+                const inputMap = { 
+                    'idea': 'aiIdeaInput', 'trademark': 'aiTrademarkInput', 'search': 'aiSearchInput', 
+                    'draft': 'aiDraftInput', 'bypass': 'aiBypassInput', 'simul': 'aiSimulInput',
+                    'value': 'aiValueInput', 'estimate': 'aiEstimateInput', 'doc': 'aiDocInput', 
+                    'qna': 'aiQnaInput', 'email': 'aiEmailInput', 'logic': 'aiLogicInput', 'scenario': 'aiScenarioInput'
+                };
+                
+                const titleMap = {
+                    'idea': '아이디어 진단', 'trademark': '상표 검토', 'search': '선행기술 검색',
+                    'draft': '명세서 초안', 'bypass': '우회 전략 제안', 'simul': '심사관 시뮬레이션',
+                    'value': '특허 가치 예측기', 'estimate': '견적서 산출', 'doc': '특허문서 해설',
+                    'qna': '미팅 질문 추출', 'email': '업무 이메일 초안', 'logic': '반박 논리 제안', 'scenario': '대응 시나리오 비교'
+                };
+
+                const activeInputId = inputMap[activeTabId];
+                const userInputText = document.getElementById(activeInputId)?.value || "입력값 없음";
+
                 const timestamp = new Date().getTime().toString();
                 const signature = await generateSignature(timestamp, userInputText);
 
@@ -1522,7 +1541,7 @@
                     timestamp: timestamp,
                     signature: signature,
                     userInput: userInputText,
-                    aiType: document.querySelector('.tab-active')?.innerText || "항목 미상",
+                    aiType: titleMap[activeTabId] || "항목 미상",
                     aiResult: document.getElementById('aiResultText').innerText,
                     companyName: document.getElementById('aiLeadCompany') ? document.getElementById('aiLeadCompany').value : "",
                     userName: document.getElementById('aiLeadName').value,
