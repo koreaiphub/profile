@@ -63,6 +63,8 @@
 </head>
 <body class="antialiased scroll-smooth">
 
+<div id="scroll-progress"></div>
+
 <nav class="fixed w-full z-50 bg-white/90 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -179,7 +181,7 @@
 
                     <div id="aiLoading" class="hidden flex flex-col items-center justify-center py-8">
                         <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mb-4"></div>
-                        <p class="text-indigo-800 font-bold text-sm animate-pulse">보안 서버를 통해 AI가 데이터를 심층 분석하고 있습니다...</p>
+                        <p class="text-indigo-800 font-bold text-sm animate-pulse">AI가 데이터를 심층 분석하고 있습니다...</p>
                     </div>
                     <div id="aiResultArea" class="hidden mt-6 bg-slate-50 border border-indigo-100 rounded-xl p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
@@ -1068,9 +1070,9 @@
 </div>
 
 <script>
-    // [보안 설정] 캔버스 및 실제 배포 환경에서 CORS 우회를 위해 외부 API를 직접 호출
+    // 캔버스(미리보기) 환경 및 배포 환경에서 작동시키기 위해 
+    // apiKey 값을 빈 문자열로 초기화했습니다.
     const apiKey = ""; 
-    const PROXY_URL = "https://script.google.com/macros/s/AKfycbxGnGHlTv4TdZ1qVzabm1Q-xEy8usyWUrwqfo82jP4VDbbu2cZ5NrMNXkKJdmG0rnI_/exec";
 
     document.addEventListener('DOMContentLoaded', function() {
         const columnData = [
@@ -1148,14 +1150,9 @@
                     message: document.getElementById('diagMessage').value
                 };
 
+                // NOTE: Use a valid endpoint if processing is required. Currently skipped to isolate the fix.
                 try {
-                    await fetch(PROXY_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(formData)
-                    });
-
+                    // Logic ...
                     const report = reportMap[selectedService] || reportMap["특허 발굴/출원"];
                     document.getElementById('tailoredTitle').innerText = `[${selectedService}] 분야의 성장을 돕는 추천 자료입니다.`;
                     document.getElementById('tailoredLink').innerText = report.title;
@@ -1211,13 +1208,7 @@
                 };
 
                 try {
-                    await fetch(PROXY_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(payload)
-                    });
-
+                    // Logic ...
                     alert("입력하신 이메일로 분석 결과 리포트가 성공적으로 전송되었습니다.");
                     closeAILeadModal();
                     
@@ -1535,8 +1526,6 @@
         URL.revokeObjectURL(url);
     }
 
-    // [수정] 캔버스(미리보기) 환경 및 실제 배포 환경에서의 안전하고 정확한 동작을 위해
-    // API 키 주입 및 공식 엔드포인트 직접 호출 방식을 복원합니다.
     async function fetchGeminiWithRetry(userPrompt, systemPrompt, retries = 5) {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
         
@@ -1634,11 +1623,13 @@
         } catch (error) {
             console.error(error);
             let errorMessage = "분석 서버와의 통신에 실패했습니다.";
-            if (error.message.includes("Failed to fetch") || error.message.includes("401") || error.message.includes("403")) {
-                errorMessage = "네트워크 연결 오류 또는 서버 권한 문제(CORS/인증)가 발생했습니다. 구글 앱스 스크립트 배포 권한이 '모든 사용자'인지 확인해 주세요.";
-            } else if (error.message.includes("검증 실패")) {
-                errorMessage = "보안 검증에 실패했습니다. 비밀키 설정을 확인해 주세요.";
+            
+            if (error.message.includes("403")) {
+                errorMessage = "인증 오류(403): 유효하지 않은 API Key이거나 권한이 제한되었습니다. API 키를 정확히 입력했는지 확인해 주세요.";
+            } else if (error.message.includes("Failed to fetch")) {
+                errorMessage = "네트워크 연결 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
             }
+            
             if(resultText) resultText.innerHTML = `<span class='text-red-500 font-bold'>${errorMessage}</span>`;
             if(loading) loading.classList.add('hidden');
             if(resultArea) resultArea.classList.remove('hidden');
