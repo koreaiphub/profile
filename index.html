@@ -416,7 +416,7 @@
             <div class="grid lg:grid-cols-2 gap-12 items-start">
                 <div class="flex flex-col h-full">
                     <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-2">특허경영 오케스트레이션 체계</h3>
-                    <p class="text-sm text-slate-600 mb-4">아이피허브가 기업과 특허사무소 사이에서 기술과 법률의 언어 장벽을 해소하고 최적의 화음을 조율합니다.</p>
+                    <p class="text-sm text-slate-600 mb-4">아이피허브가 기업과 특허사무소 사이에서 기술과 법률의 언어 장벽 해소하고 최적의 화음을 조율합니다.</p>
                     
                     <div class="bg-slate-50 rounded-xl border border-slate-200 p-8 flex flex-col items-center justify-center flex-grow shadow-inner">
                         <div class="w-full bg-white border-2 border-slate-300 rounded-lg p-5 text-center shadow-sm relative z-10 animate-on-scroll">
@@ -963,6 +963,10 @@
             <p class="text-sm text-slate-600 mb-6">고객님의 소중한 아이디어와 AI 진단 결과를 안전하게 보관하기 위해, 입력하신 <strong>이메일 주소로 리포트 전문을 발송</strong>해 드립니다.</p>
             <form id="aiLeadForm" class="space-y-4">
                 <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">기업명 (선택)</label>
+                    <input type="text" id="aiLeadCompany" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="예: 아이피허브">
+                </div>
+                <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">성함 <span class="text-red-500">*</span></label>
                     <input type="text" id="aiLeadName" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="예: 홍길동">
                 </div>
@@ -971,7 +975,7 @@
                     <input type="email" id="aiLeadEmail" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="예: siphub@gmail.com">
                 </div>
                 <div class="pt-4">
-                    <button type="submit" id="aiLeadSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-all shadow-md">이메일로 결과 받기</button>
+                    <button type="submit" id="aiLeadSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-all shadow-md">결과 리포트 이메일로 받기</button>
                 </div>
             </form>
         </div>
@@ -980,6 +984,7 @@
 
 <script>
     // [보안 설정] 프록시 우회용 URL
+    // 주의: 테스트용 시뮬레이션을 중단하고 실제 데이터 전송을 위해 대표님의 실제 GAS 웹 앱 URL을 입력해 주십시오.
     const PROXY_URL = "https://script.google.com/macros/s/AKfycbwagFyl23gtE9-Shr-UBJV_B85N9vDHD5ZFU9flOL9YopN-MBTUrwl0tiVQ26Y3sdL7/exec";
     const SHARED_SECRET = "IPHUB_SECURE_TOKEN_2026_!@#"; 
     const apiKey = ""; // Canvas 환경에서 자동 주입됨
@@ -1032,7 +1037,10 @@
         
         // 프록시 통신 시도
         try {
-            if (PROXY_URL && !PROXY_URL.includes("AKfycbyb12Ye")) {
+            // [보안 패치] 예시용 URL 판별 조건 업데이트 (Fallback 감지)
+            const isTestUrl = PROXY_URL.includes("AKfycbyb12Ye") || PROXY_URL.includes("AKfycbwagFyl");
+            
+            if (PROXY_URL && !isTestUrl) {
                 const timestamp = new Date().getTime().toString();
                 const signature = await generateSignature(timestamp, payloadString);
                 
@@ -1164,7 +1172,7 @@
         switch(type) {
             case 'idea': systemPrompt = "당신은 아이피허브 수석 특허 전략가입니다. 1. 핵심 기술 포인트 2. 추천 출원 전략 3. 예상 방어 효과를 마크다운으로 답변하세요."; break;
             case 'trademark': systemPrompt = "당신은 상표권 전문 변리사입니다. 사용자가 입력한 상표명과 지정상품/서비스를 바탕으로 다음을 마크다운으로 분석해 주세요. 1. 상표의 식별력(보통명칭, 기술적 표장 여부 등) 검토 2. 유사 상표 존재 위험성 및 등록 가능성 예측 3. 성공적인 상표 등록을 위한 우회 전략 및 조언. 단, 본 분석은 1차적 검토이며 법적 효력이 없음을 명시하세요."; break;
-            case 'search': systemPrompt = "당신은 선행기술조사 전문 변리사입니다. 사용자의 발명 내용을 바탕으로, 가장 유사할 것으로 예상되는 가상의 선행 특허 문헌 10건(발명의 명칭, 요약, 핵심 차이점)을 검색 결과 형식으로 제시해 주세요. 또한 KIPRIS 등 실제 데이터베이스에서 검색 시 활용할 수 있는 추천 불리언 검색식(Boolean Query)과 추천 IPC 분류 코드를 함께 제공해 주세요. 마크다운으로 정리해 주세요."; break;
+            case 'search': systemPrompt = "당신은 선행기술조사 전문 변리사입니다. 사용자의 발명 내용을 바탕으로, 가장 유사할 것으로 예상되는 가상의 선행 특허 문헌 3건(발명의 명칭, 요약, 핵심 차이점)을 검색 결과 형식으로 제시해 주세요. 또한 KIPRIS 등 실제 데이터베이스에서 검색 시 활용할 수 있는 추천 불리언 검색식(Boolean Query)과 추천 IPC 분류 코드를 함께 제공해 주세요. 마크다운으로 정리해 주세요."; break;
             case 'draft': systemPrompt = "전문 변리사로서 입력된 아이디어의 특허 명세서 초안을 표준 구조에 맞춰 상세하게 작성하세요."; break;
             case 'bypass': systemPrompt = "특허 공격 전략가로서 경쟁 기술을 회피하거나 독점력을 높일 대안 설계를 제안하세요."; break;
             case 'simul': systemPrompt = "당신은 깐깐한 특허청 수석 특허심사관입니다. 사용자의 주장이나 발명 내용을 보고 타당성, 맹점, 예상 거절 이유(신규성, 진보성 결여 등), 이를 극복하기 위한 보완 가이드를 날카롭게 피드백해 주세요. 마크다운을 적용하세요."; break;
@@ -1177,6 +1185,12 @@
             case 'scenario': systemPrompt = "거절 이유에 대해 취할 수 있는 현실적인 3가지 대응 시나리오의 장단점과 예상 성공률을 분석해 주세요."; break;
             default: systemPrompt = "전문적인 아이피허브 AI 어시스턴트입니다.";
         }
+
+        const model = "gemini-2.5-flash-preview-09-2025";
+        const payload = {
+            contents: [{ parts: [{ text: userInput }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] }
+        };
 
         const loading = document.getElementById('aiLoading');
         const resultArea = document.getElementById('aiResultArea');
@@ -1246,7 +1260,7 @@
         a.click();
     }
 
-    // 아코디언 메뉴 제어 로직 (복구됨)
+    // 아코디언 메뉴 제어 로직
     function toggleAccordion(id, groupPrefix = null) {
         const targetContent = document.getElementById('content-' + id);
         const targetIcon = document.getElementById('icon-' + id);
@@ -1274,7 +1288,7 @@
         }
     }
 
-    // 모달 창 제어 로직 (복구됨)
+    // 모달 창 제어 로직
     function openAILeadModal() { 
         const modal = document.getElementById('aiLeadModal');
         if (modal) {
@@ -1293,14 +1307,14 @@
     
     document.addEventListener('DOMContentLoaded', () => {
         
-        // 1. 스크롤 진행률 바 업데이트 (복구됨)
+        // 1. 스크롤 진행률 바 업데이트
         window.addEventListener('scroll', () => {
             const h = document.documentElement;
             const scrollBar = document.getElementById('scroll-progress');
             if (scrollBar) scrollBar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
         });
 
-        // 2. 정보성 섹션 탭 버튼 전환 제어 (복구됨)
+        // 2. 정보성 섹션 탭 버튼 전환 제어
         const infoTabBtns = document.querySelectorAll('.tab-btn');
         const infoTabContents = document.querySelectorAll('.tab-content');
         infoTabBtns.forEach(btn => {
@@ -1322,7 +1336,7 @@
             });
         });
 
-        // 3. 차트 초기화 (복구됨)
+        // 3. 차트 초기화
         const chartCanvas = document.getElementById('registrationRateChart');
         if (chartCanvas) {
             new Chart(chartCanvas, {
@@ -1338,7 +1352,7 @@
             });
         }
 
-        // 4. 유튜브 동영상 팝업 및 콘텐츠 세팅 (복구됨)
+        // 4. 유튜브 동영상 팝업 및 콘텐츠 세팅
         const columnData = [
             { title: "핀포인트뉴스 특허전략", summary: "스타트업 특허 트렌드 가이드", url: "https://www.pinpointnews.co.kr/news/articleList.html?sc_area=A&view_type=sm&sc_word=%EC%95%84%EC%9D%B4%ED%94%BC%ED%97%88%EB%B8%8C" },
             { title: "핀테크투데이 전문가 칼럼", summary: "핀테크 비즈니스 모델 보호 가이드", url: "https://www.fintechtoday.co.kr/news/articleList.html?sc_area=A&view_type=sm&sc_word=%EC%9D%B4%EB%B3%91%EB%8F%88" }
@@ -1403,7 +1417,7 @@
             };
         }
 
-        // 5. 모달 및 진단 신청 버튼 제어 (복구됨)
+        // 5. 모달 및 진단 신청 버튼 제어
         const setupModal = (triggerId, modalId, closeId) => {
             const trigger = document.getElementById(triggerId);
             const modal = document.getElementById(modalId);
@@ -1424,7 +1438,7 @@
             };
         }
 
-        // 6. 분야별 데이터베이스 검색 필터 (복구됨)
+        // 6. 분야별 데이터베이스 검색 필터
         const dbSearchInput = document.getElementById('dbSearchInput');
         const dbListContainer = document.getElementById('dbListContainer');
         if (dbSearchInput && dbListContainer) {
@@ -1454,14 +1468,16 @@
                 submitBtn.innerText = "접수 중...";
                 submitBtn.classList.replace('bg-blue-600', 'bg-slate-400');
 
-                // 진단 신청 시에도 백엔드 검증을 통과하기 위한 서명(Signature) 생성
                 const timestamp = new Date().getTime().toString();
-                const signature = await generateSignature(timestamp, "");
+                // [보안 패치] 멀티라인 텍스트 및 인코딩 차이로 인한 서명 불일치를 막기 위해 공통 보안 토큰을 서명합니다.
+                const securePayloadStr = "IPHUB_CRM_REQUEST";
+                const signature = await generateSignature(timestamp, securePayloadStr);
 
                 const formData = {
                     requestType: 'diagnosis',
                     timestamp: timestamp,
                     signature: signature,
+                    payload: securePayloadStr, // 백엔드의 data.payload 변수 선점
                     userInput: "", 
                     name: document.getElementById('diagName').value,
                     phone: document.getElementById('diagPhone').value,
@@ -1472,9 +1488,10 @@
 
                 try {
                     // [테스트 환경 예외 처리] 더미 URL인 경우 가상 성공 응답 처리 (Fallback)
-                    if (PROXY_URL && PROXY_URL.includes("AKfycbyb12Ye")) {
+                    const isTestUrl = PROXY_URL.includes("AKfycbyb12Ye") || PROXY_URL.includes("AKfycbwagFyl");
+                    if (PROXY_URL && isTestUrl) {
                         console.warn("테스트 환경: 진단 신청 성공 상태로 시뮬레이션합니다.");
-                        await new Promise(res => setTimeout(res, 800)); // 통신 시간 0.8초 지연 모방
+                        await new Promise(res => setTimeout(res, 800));
                         formContainer.classList.add('hidden');
                         successMessage.classList.remove('hidden');
                         return;
@@ -1495,7 +1512,8 @@
                     formContainer.classList.add('hidden');
                     successMessage.classList.remove('hidden');
                 } catch (err) {
-                    alert("통신 오류가 발생했습니다. 백엔드 배포 주소 및 보안 설정을 확인해주세요.\n(상세: " + err.message + ")");
+                    console.error("진단 신청 실패:", err);
+                    alert("통신 오류가 발생했습니다.\n\n[예상 원인 및 해결 방법]\n1. PROXY_URL 주소가 올바른지 확인하세요.\n2. 스크립트 배포 시 접근 권한이 '모든 사용자'로 설정되었는지 확인하세요.\n\n상세 에러: " + err.message);
                     submitBtn.disabled = false;
                     submitBtn.innerText = "다시 시도하기";
                     submitBtn.classList.replace('bg-slate-400', 'bg-blue-600');
@@ -1513,7 +1531,6 @@
                 btn.disabled = true;
                 btn.innerText = "전송 중...";
 
-                // [에러 수정] DOM 조회 대신 전역 변수를 활용하여 활성화된 탭 식별 (null 충돌 방지)
                 const activeTabId = window.currentAIType || 'idea';
                 
                 const inputMap = { 
@@ -1534,12 +1551,15 @@
                 const userInputText = document.getElementById(activeInputId)?.value || "입력값 없음";
 
                 const timestamp = new Date().getTime().toString();
-                const signature = await generateSignature(timestamp, userInputText);
+                // [보안 패치] 멀티라인 텍스트 및 인코딩 차이로 인한 서명 불일치를 막기 위해 공통 보안 토큰을 서명합니다.
+                const securePayloadStr = "IPHUB_CRM_REQUEST";
+                const signature = await generateSignature(timestamp, securePayloadStr);
 
                 const payload = {
                     requestType: 'ai_result',
                     timestamp: timestamp,
                     signature: signature,
+                    payload: securePayloadStr, // 백엔드의 data.payload 변수 선점
                     userInput: userInputText,
                     aiType: titleMap[activeTabId] || "항목 미상",
                     aiResult: document.getElementById('aiResultText').innerText,
@@ -1550,7 +1570,8 @@
 
                 try {
                     // [테스트 환경 예외 처리] 더미 URL인 경우 가상 성공 응답 처리 (Fallback)
-                    if (PROXY_URL && PROXY_URL.includes("AKfycbyb12Ye")) {
+                    const isTestUrl = PROXY_URL.includes("AKfycbyb12Ye") || PROXY_URL.includes("AKfycbwagFyl");
+                    if (PROXY_URL && isTestUrl) {
                         console.warn("테스트 환경: 리포트 전송 성공 상태로 시뮬레이션합니다.");
                         await new Promise(res => setTimeout(res, 800));
                         alert("입력하신 이메일로 분석 결과 리포트가 성공적으로 전송되었습니다. (시뮬레이션)");
@@ -1575,7 +1596,8 @@
                     closeAILeadModal();
                     aiLeadForm.reset();
                 } catch (err) {
-                    alert("전송 중 오류가 발생했습니다: " + err.message);
+                    console.error("이메일 전송 실패:", err);
+                    alert("이메일 전송 중 오류가 발생했습니다.\n\n[예상 원인 및 해결 방법]\n1. PROXY_URL 주소가 실제 구글 앱스 스크립트 주소와 일치하는지 확인하세요.\n2. 구글 앱스 스크립트에서 이메일 발송(MailApp) 권한이 정상적으로 승인되었는지 확인하세요.\n3. 새 배포를 통해 생성된 최신 URL을 적용했는지 확인하세요.\n\n상세 에러: " + err.message);
                 } finally {
                     btn.disabled = false;
                     btn.innerText = originalText;
