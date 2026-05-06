@@ -136,52 +136,52 @@
                     <div id="view-idea" class="block">
                         <p class="text-sm text-slate-600 mb-4 font-medium">머릿속에 있는 비즈니스 아이디어나 기술을 편하게 적어주세요. IPHUB의 AI 전략가가 특허화 포인트를 분석해 드립니다.</p>
                         <textarea id="aiIdeaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 프리랜서 디자이너와 동네 카페를 연결해주고, 블록체인으로 대금을 안전하게 정산하는 플랫폼 모델"></textarea>
-                        <button onclick="requestGemini('idea')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 분석 시작하기</button>
+                        <button onclick="requestGemini('idea')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">분석 시작하기</button>
                     </div>
                     <div id="view-doc" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">이해하기 어려운 '특허 의견제출통지서' 내용이나 낯선 법률 용어를 복사해서 붙여넣으세요.</p>
                         <textarea id="aiDocInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 본원발명은 인용발명 1에 기재된 구성요소와 목적 및 효과가 동일하여 통상의 기술자가 용이하게 발명할 수 있으므로 진보성이 결여됨."></textarea>
-                        <button onclick="requestGemini('doc')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 해설 요청하기</button>
+                        <button onclick="requestGemini('doc')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">해설 요청하기</button>
                     </div>
                     <div id="view-qna" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">현재 겪고 있는 문제나 의견제출통지서의 요지를 알려주세요. 특허사무소와의 미팅에서 꼭 물어봐야 할 핵심 질문 리스트를 작성해 드립니다.</p>
                         <textarea id="aiQnaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 진보성 흠결로 거절 이유가 나왔는데, 우리 기술은 A라는 특징이 다릅니다. 특허사무소에 어떻게 대응 전략을 물어봐야 할까요?"></textarea>
-                        <button onclick="requestGemini('qna')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 질문 추출하기</button>
+                        <button onclick="requestGemini('qna')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">질문 추출하기</button>
                     </div>
                     <div id="view-email" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">특허사무소에 전달하고 싶은 내용을 편하게 적어주세요. 명확하고 정중한 업무용 이메일 초안으로 변환해 드립니다.</p>
                         <textarea id="aiEmailInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 저번 통지서 보니까 심사관이 우리 기술을 기존 거랑 똑같다고 하는데, 우리는 데이터 처리 속도를 2배 높인 기술이 들어갔어요. 이거 꼭 강조해서 의견서 써달라고 전해주세요."></textarea>
-                        <button onclick="requestGemini('email')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 업무 이메일 초안 생성</button>
+                        <button onclick="requestGemini('email')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">업무 이메일 초안 생성</button>
                     </div>
                     <div id="view-logic" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">심사관이 제시한 거절 이유와 우리 기술만의 차별점을 편하게 적어주세요. 특허청을 설득할 수 있는 강력한 반박 논리 초안을 구성해 드립니다.</p>
                         <textarea id="aiLogicInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 심사관은 우리 기술이 기존 A기술과 유사하다고 주장하지만, 우리는 B라는 센서를 추가 연동하여 데이터 처리 속도와 정확도를 2배 이상 높였습니다."></textarea>
-                        <button onclick="requestGemini('logic')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 반박 논리 제안받기</button>
+                        <button onclick="requestGemini('logic')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">반박 논리 제안받기</button>
                     </div>
                     <div id="view-scenario" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">받으신 거절 이유 요지를 적어주시면, 취할 수 있는 현실적인 3가지 대응 시나리오의 장단점과 예상 성공률을 분석해 드립니다.</p>
                         <textarea id="aiScenarioInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 메타버스에서 아바타 이동 제어 방식에 대해 진보성이 부족하다는 거절 이유가 나왔습니다. 어떻게 대응하는 것이 좋을까요?"></textarea>
-                        <button onclick="requestGemini('scenario')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 대응 시나리오 분석하기</button>
+                        <button onclick="requestGemini('scenario')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">대응 시나리오 분석하기</button>
                     </div>
                     <div id="view-simul" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">특허청 심사관에게 제출할 의견서 논리를 미리 테스트해보세요. AI 심사관이 깐깐한 기준으로 논리의 타당성을 검증하고 보완점을 짚어드립니다.</p>
                         <textarea id="aiSimulInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 기존 기술은 규칙 기반으로 사기 결제를 탐지하지만, 우리 기술은 사용자 위치 정보와 생체 인증을 결합한 모델을 사용하여 탐지율을 높였습니다."></textarea>
-                        <button onclick="requestGemini('simul')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 AI 심사관 피드백 받기</button>
+                        <button onclick="requestGemini('simul')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">AI 심사관 피드백 받기</button>
                     </div>
                     <div id="view-plan" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">의견제출통지서 제출 마감일(D-Day)과 현재 상황을 간단히 적어주세요. 남은 기간 동안 기업과 특허사무소가 각각 무엇을 해야 할지 주차별 액션 플랜을 세워드립니다.</p>
                         <textarea id="aiPlanInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 마감일이 한 달 남았습니다. 진보성 부족이 문제라 이번 주에 특허사무소와 미팅을 잡을 예정입니다. 일정 관리를 어떻게 해야 할까요?"></textarea>
-                        <button onclick="requestGemini('plan')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 맞춤형 대응 일정 생성</button>
+                        <button onclick="requestGemini('plan')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">맞춤형 대응 일정 생성</button>
                     </div>
                     <div id="view-value" class="hidden">
                         <p class="text-sm text-slate-600 mb-4 font-medium">특허 진행을 포기할까 고민 중이신가요? 핵심 기술을 적어주시면, 등록 성공 시 얻게 될 미래 가치와 포기 시 잃게 될 매몰 비용 및 리스크를 분석해 드립니다.</p>
                         <textarea id="aiValueInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 블록체인 기반의 음원 저작권 수익 분배 플랫폼 기술입니다. 현재 의견서 제출 비용이 부담되어 포기할까 고민 중입니다."></textarea>
-                        <button onclick="requestGemini('value')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">보안 서버를 통해 매몰비용 및 미래가치 분석</button>
+                        <button onclick="requestGemini('value')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">매몰비용 및 미래가치 분석</button>
                     </div>
 
                     <div id="aiLoading" class="hidden flex flex-col items-center justify-center py-8">
                         <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mb-4"></div>
-                        <p class="text-indigo-800 font-bold text-sm animate-pulse">안전한 프록시 서버를 통해 AI가 데이터를 심층 분석하고 있습니다...</p>
+                        <p class="text-indigo-800 font-bold text-sm animate-pulse">AI가 데이터를 심층 분석하고 있습니다...</p>
                     </div>
                     <div id="aiResultArea" class="hidden mt-6 bg-slate-50 border border-indigo-100 rounded-xl p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
@@ -1071,11 +1071,11 @@
 
 <script>
     // [중요 보안 설정] 외부로 노출되지 않는 프록시 서버 URL (웹 배포 시 필수 사용)
-    const PROXY_URL = "https://script.google.com/macros/s/AKfycbwxf3e8y2ejFP3AQZM8F_5AHBWNLgIzTFHtpooC1c70kuRV_qSTh6DYHSe4q9IYmGYJ/exec";
+    const PROXY_URL = "https://script.google.com/macros/s/AKfycbwoBqu1cyD1SAs9Qc8UAYz7ti1n-TuSuqNmuGQCzgMo7Xj-m8I_MotcqdnExuOV92VO/exec";
     
     // 프론트엔드와 백엔드가 통신이 유효함을 증명하는 대칭키입니다.
-    // 백엔드(GAS) 코드의 SHARED_SECRET 값과 완전히 동일해야 합니다.
     const SHARED_SECRET = "IPHUB_SECURE_TOKEN_2026_!@#";
+    const apiKey = ""; // Canvas 환경 지원용 빈 문자열
 
     document.addEventListener('DOMContentLoaded', function() {
         const columnData = [
@@ -1540,7 +1540,7 @@
         URL.revokeObjectURL(url);
     }
 
-    // [보안 강화] 백엔드(GAS)와 공유된 비밀키로 서명을 생성하는 함수
+    // [보안 강화] 백엔드(GAS)와 공유된 비밀키로 서명을 생성하는 함수 (유지, 필요시 사용)
     async function generateSignature(timestamp, data) {
         const message = timestamp + data;
         const encoder = new TextEncoder();
@@ -1555,47 +1555,33 @@
         return Array.from(new Uint8Array(signature)).map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
-    // [보안 설정] 구글 API를 직접 호출하지 않고, 숨겨진 프록시(GAS) 서버로 우회 호출합니다.
+    // [수정] Canvas(미리보기) 환경 지원을 위한 통신 로직 직접 호출
+    // Canvas 시스템에서 지원하는 `gemini-2.5-flash-preview-09-2025` 모델을 사용하여 직접 통신하도록 롤백합니다.
     async function fetchGeminiWithRetry(userPrompt, systemPrompt, retries = 5) {
-        // 보안 검증을 위한 타임스탬프와 서명 생성
-        const timestamp = Date.now().toString();
-        const signature = await generateSignature(timestamp, userPrompt);
+        // Canvas 환경에서는 apiKey를 ""로 두고 gemini-2.5-flash-preview-09-2025 모델을 사용해야 합니다.
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
         
         const payload = {
-            requestType: 'gemini_proxy',
-            userInput: userPrompt,
-            systemPrompt: systemPrompt,
-            timestamp: timestamp,
-            signature: signature
+            contents: [{ parts: [{ text: userPrompt }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] }
         };
 
         const delays = [1000, 2000, 4000, 8000, 16000];
         
         for (let i = 0; i < retries; i++) {
             try {
-                // [통신 최적화] Content-Type을 text/plain으로 강제하여 브라우저의 사전 요청(Preflight) 우회
-                const response = await fetch(PROXY_URL, {
+                const response = await fetch(url, {
                     method: 'POST',
-                    redirect: 'follow', // 구글 서버의 내부 리다이렉트 허용
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
                 
                 if (!response.ok) throw new Error(`HTTP 통신 오류 (상태 코드: ${response.status})`);
                 
                 const result = await response.json();
-                
-                // 프록시 서버에서 보안 서명 대조 실패 시 에러 처리
-                if (result.status !== 200) {
-                    throw new Error(result.message || "보안 검증 실패");
-                }
-                
-                return result.text || "결과를 생성할 수 없습니다.";
+                return result.candidates?.[0]?.content?.parts?.[0]?.text || "결과를 생성할 수 없습니다.";
             } catch (error) {
-                // 서명 불일치 등 명백한 인증 에러는 재시도 없이 즉시 중단
-                if (i === retries - 1 || error.message.includes("검증 실패") || error.message.includes("Auth") || error.message.includes("Signature") || error.message.includes("Failed to fetch") || error.message.includes("404")) {
-                    throw error;
-                }
+                if (i === retries - 1) throw error;
                 await new Promise(res => setTimeout(res, delays[i])); 
             }
         }
@@ -1672,11 +1658,11 @@
             
             // [에러 핸들링 강화] 원인별 명확한 안내 메시지 출력
             if (error.message.includes("404") || error.message.includes("not found")) {
-                errorMessage = "AI 모델 연동 오류(404): 구글 앱스 스크립트(GAS) 코드에서 모델명을 'gemini-1.5-flash'로 수정 후 [새 배포]를 진행해 주세요.";
-            } else if (error.message.includes("검증 실패") || error.message.includes("보안 에러")) {
-                errorMessage = "보안 검증에 실패했습니다. (HMAC 서명 불일치) 백엔드 코드의 설정이 올바른지 확인해 주세요.";
+                errorMessage = "AI 모델 연동 오류(404): 지원되지 않는 모델명입니다. 코드를 점검해 주세요.";
+            } else if (error.message.includes("403")) {
+                errorMessage = "인증 오류(403): 유효하지 않은 API Key이거나 권한이 제한되었습니다.";
             } else if (error.message.includes("Failed to fetch")) {
-                errorMessage = "네트워크 연결 오류 또는 서버 권한 문제(CORS)가 발생했습니다. 구글 앱스 스크립트 배포 권한이 '모든 사용자'인지 점검해 주세요.";
+                errorMessage = "네트워크 연결 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
             } else {
                 errorMessage = `통신 에러 발생: ${error.message}`;
             }
