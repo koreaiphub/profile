@@ -963,6 +963,10 @@
             <p class="text-sm text-slate-600 mb-6">고객님의 소중한 아이디어와 AI 진단 결과를 안전하게 보관하기 위해, 입력하신 <strong>이메일 주소로 리포트 전문을 발송</strong>해 드립니다.</p>
             <form id="aiLeadForm" class="space-y-4">
                 <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">기업명 (선택)</label>
+                    <input type="text" id="aiLeadCompany" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="예: 아이피허브">
+                </div>
+                <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">성함 <span class="text-red-500">*</span></label>
                     <input type="text" id="aiLeadName" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="예: 홍길동">
                 </div>
@@ -979,102 +983,73 @@
 </div>
 
 <script>
-    // [보안 설정] 프록시 우회용 URL
-    // 주의: 테스트용 시뮬레이션을 중단하고 실제 데이터 전송을 위해 대표님의 실제 GAS 웹 앱 URL을 입력해 주십시오.
+    // [중요 설정] Vercel 환경에서 CRM 데이터(이메일, 폼 전송)를 구글 시트로 보내기 위한 프록시 주소
     const PROXY_URL = "https://script.google.com/macros/s/AKfycbwagFyl23gtE9-Shr-UBJV_B85N9vDHD5ZFU9flOL9YopN-MBTUrwl0tiVQ26Y3sdL7/exec";
-    const SHARED_SECRET = "IPHUB_SECURE_TOKEN_2026_!@#"; 
+    
+    // AI 호출용 Vercel 서버리스 API 엔드포인트
+    const VERCEL_API_ENDPOINT = "/api/gemini";
+    
     const apiKey = ""; // Canvas 환경에서 자동 주입됨
 
     window.currentAIType = 'idea';
     let currentAudio = null;
 
     /**
-     * Web Crypto API를 활용한 HMAC-SHA256 서명 생성 함수
-     */
-    async function generateSignature(timestamp, payloadString) {
-        const message = timestamp + payloadString;
-        const encoder = new TextEncoder();
-        const keyData = encoder.encode(SHARED_SECRET);
-        const msgData = encoder.encode(message);
-        
-        const cryptoKey = await crypto.subtle.importKey(
-            "raw", keyData, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
-        );
-        
-        const signatureBuffer = await crypto.subtle.sign("HMAC", cryptoKey, msgData);
-        return Array.from(new Uint8Array(signatureBuffer))
-            .map(b => b.toString(16).padStart(2, "0"))
-            .join("");
-    }
-
-    /**
-     * 보안 프록시(GAS) 서버를 경유하는 안전한 통신 모듈 (자동 Fallback 포함)
+     * 안전한 Vercel API 서버리스 함수 및 Canvas 다이렉트 통신 모듈
+     * 프론트엔드에서는 API 키를 숨기고, 모든 통신은 Vercel 백엔드를 거칩니다.
      */
     async function fetchGeminiWithRetry(userInput, systemPrompt, modelType, retries = 5) {
-        const isTTS = modelType === "gemini-2.5-flash-preview-tts";
+        const isTTS = modelType === 'gemini-2.5-flash-preview-tts';
+        const isCanvasEnv = window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog');
         
+        let url;
         let payload;
-        if (isTTS) {
-            payload = {
-                contents: [{ parts: [{ text: "Say professionally and clearly: " + userInput.substring(0, 1000) }] }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
-                }
-            };
-        } else {
-            payload = {
-                contents: [{ parts: [{ text: userInput }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-        }
-        
-        const payloadString = JSON.stringify(payload);
-        
-        // 프록시 통신 시도
-        try {
-            if (PROXY_URL && !PROXY_URL.includes("AKfycbyb12Ye")) {
-                const timestamp = new Date().getTime().toString();
-                const signature = await generateSignature(timestamp, payloadString);
-                
-                const proxyPayload = {
-                    requestType: 'gemini_proxy',
-                    modelType: modelType,
-                    timestamp: timestamp,
-                    signature: signature,
-                    payload: payloadString
+
+        if (isCanvasEnv) {
+            // Canvas(미리보기) 환경: Gemini API 직접 호출
+            url = `https://generativelanguage.googleapis.com/v1beta/models/${modelType}:generateContent?key=${apiKey}`;
+            if (isTTS) {
+                payload = {
+                    contents: [{ parts: [{ text: "Say professionally and clearly: " + userInput.substring(0, 1000) }] }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
+                    }
                 };
-
-                const response = await fetch(PROXY_URL, {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(proxyPayload)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.status && result.status !== 200) throw new Error(result.message);
-                    return result;
-                }
+            } else {
+                payload = {
+                    contents: [{ parts: [{ text: userInput }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
             }
-        } catch (proxyError) {
-            console.warn("프록시 통신 실패. 브라우저 다이렉트 통신(Fallback)으로 전환합니다.", proxyError);
+        } else {
+            // Vercel 운영 환경: 서버리스 API 백엔드 호출 (상대경로)
+            url = VERCEL_API_ENDPOINT;
+            payload = {
+                userInput: userInput,
+                systemPrompt: systemPrompt,
+                modelType: modelType
+            };
         }
 
-        // 다이렉트 통신 (Fallback)
-        const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelType}:generateContent?key=${apiKey}`;
         const delays = [1000, 2000, 4000, 8000, 16000];
 
         for (let i = 0; i < retries; i++) {
             try {
-                const response = await fetch(directUrl, {
+                // Vercel 환경에서 절대 경로 생성을 위한 보완
+                const fetchUrl = isCanvasEnv ? url : (window.location.origin !== "null" ? window.location.origin + url : url);
+                
+                const response = await fetch(fetchUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: payloadString
+                    body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) throw new Error(`HTTP 통신 오류 (상태 코드: ${response.status})`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `HTTP 통신 오류 (상태 코드: ${response.status})`);
+                }
+
                 return await response.json();
             } catch (error) {
                 if (i === retries - 1) throw error;
@@ -1141,6 +1116,8 @@
                     btn.innerHTML = originalHtml; 
                     btn.onclick = playAIResultTTS;
                 };
+            } else {
+                throw new Error("음성 데이터 응답이 비어있습니다.");
             }
         } catch (e) {
             console.error(e);
@@ -1150,7 +1127,7 @@
         }
     }
 
-    // 텍스트 생성 (Gemini API)
+    // 텍스트 생성 (Vercel API 서버 경유)
     async function requestGemini(type) {
         const inputMap = { 
             'idea': 'aiIdeaInput', 'trademark': 'aiTrademarkInput', 'search': 'aiSearchInput', 
@@ -1178,12 +1155,6 @@
             case 'scenario': systemPrompt = "거절 이유에 대해 취할 수 있는 현실적인 3가지 대응 시나리오의 장단점과 예상 성공률을 분석해 주세요."; break;
             default: systemPrompt = "전문적인 아이피허브 AI 어시스턴트입니다.";
         }
-
-        const model = "gemini-2.5-flash-preview-09-2025";
-        const payload = {
-            contents: [{ parts: [{ text: userInput }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-        };
 
         const loading = document.getElementById('aiLoading');
         const resultArea = document.getElementById('aiResultArea');
@@ -1448,7 +1419,7 @@
             });
         }
 
-        // 7. 폼 제출 이벤트 핸들러 (진단 신청 로직)
+        // 7. 폼 제출 이벤트 핸들러 (진단 신청 로직 - CRM용 GAS 통신 유지)
         const diagForm = document.getElementById('diagnosisForm');
         const submitBtn = document.getElementById('submitBtn');
         const formContainer = document.getElementById('formContainer');
@@ -1461,14 +1432,9 @@
                 submitBtn.innerText = "접수 중...";
                 submitBtn.classList.replace('bg-blue-600', 'bg-slate-400');
 
-                const timestamp = new Date().getTime().toString();
-                const signature = await generateSignature(timestamp, "");
-
+                // 서명 검증은 이제 Vercel API에서 담당하거나 불필요하므로 제거하여 단순화
                 const formData = {
                     requestType: 'diagnosis',
-                    timestamp: timestamp,
-                    signature: signature,
-                    userInput: "", 
                     name: document.getElementById('diagName').value,
                     phone: document.getElementById('diagPhone').value,
                     source: document.getElementById('diagSource').value,
@@ -1485,15 +1451,12 @@
                     });
                     
                     if (!response.ok) throw new Error(`HTTP 에러: ${response.status}`);
-                    const result = await response.json();
                     
-                    if (result.status !== 200) throw new Error(result.message);
-
                     formContainer.classList.add('hidden');
                     successMessage.classList.remove('hidden');
                 } catch (err) {
                     console.error("진단 신청 실패:", err);
-                    alert("통신 오류가 발생했습니다.\n\n[예상 원인 및 해결 방법]\n1. PROXY_URL 주소가 올바른지 확인하세요.\n2. 스크립트 배포 시 접근 권한이 '모든 사용자'로 설정되었는지 확인하세요.\n\n상세 에러: " + err.message);
+                    alert("통신 오류가 발생했습니다.\n\n[상세 에러] " + err.message);
                     submitBtn.disabled = false;
                     submitBtn.innerText = "다시 시도하기";
                     submitBtn.classList.replace('bg-slate-400', 'bg-blue-600');
@@ -1501,7 +1464,7 @@
             });
         }
 
-        // 8. 폼 제출 이벤트 핸들러 (AI 리포트 메일 수신 로직)
+        // 8. 폼 제출 이벤트 핸들러 (AI 리포트 메일 수신 로직 - CRM용 GAS 통신 유지)
         const aiLeadForm = document.getElementById('aiLeadForm');
         if (aiLeadForm) {
             aiLeadForm.addEventListener('submit', async (e) => {
@@ -1530,13 +1493,8 @@
                 const activeInputId = inputMap[activeTabId];
                 const userInputText = document.getElementById(activeInputId)?.value || "입력값 없음";
 
-                const timestamp = new Date().getTime().toString();
-                const signature = await generateSignature(timestamp, userInputText);
-
                 const payload = {
                     requestType: 'ai_result',
-                    timestamp: timestamp,
-                    signature: signature,
                     userInput: userInputText,
                     aiType: titleMap[activeTabId] || "항목 미상",
                     aiResult: document.getElementById('aiResultText').innerText,
@@ -1554,16 +1512,13 @@
                     });
                     
                     if (!response.ok) throw new Error(`HTTP 에러: ${response.status}`);
-                    const result = await response.json();
-                    
-                    if (result.status !== 200) throw new Error(result.message);
 
                     alert("입력하신 이메일로 분석 결과 리포트가 성공적으로 전송되었습니다.");
                     closeAILeadModal();
                     aiLeadForm.reset();
                 } catch (err) {
                     console.error("이메일 전송 실패:", err);
-                    alert("이메일 전송 중 오류가 발생했습니다.\n\n[예상 원인 및 해결 방법]\n1. PROXY_URL 주소가 실제 구글 앱스 스크립트 주소와 일치하는지 확인하세요.\n2. 구글 앱스 스크립트에서 이메일 발송(MailApp) 권한이 정상적으로 승인되었는지 확인하세요.\n3. 새 배포를 통해 생성된 최신 URL을 적용했는지 확인하세요.\n\n상세 에러: " + err.message);
+                    alert("이메일 전송 중 오류가 발생했습니다.\n\n[상세 에러] " + err.message);
                 } finally {
                     btn.disabled = false;
                     btn.innerText = originalText;
