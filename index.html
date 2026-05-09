@@ -984,7 +984,10 @@
 
 <script>
     // [중요 설정] Vercel 환경에서 CRM 데이터(이메일, 폼 전송)를 구글 시트로 보내기 위한 프록시 주소
-    const PROXY_URL = "https://script.google.com/macros/s/AKfycbwUthWhiJMZPGJDelTkybSbWJBy_w_1C2VweTUx3HM7SLquATeXkQVMt-M-I7TQINBeDA/exec";
+    const PROXY_URL = "https://script.google.com/macros/s/AKfycbw9jCVnDF1Y1fri8bRl5pfgc9V2lMyCgpbPmn8lXlYVeNdporrT4Vq97X5njQTc6cUdEw/exec";
+    
+    // 백엔드와 완벽하게 일치해야 하는 대칭키 (서명 검증용)
+    const SHARED_SECRET = "IPHUB_SECURE_TOKEN_2026_!@#";
     
     // AI 호출용 Vercel 서버리스 API 엔드포인트
     // (반드시 Github 저장소의 api/gemini.js 에 백엔드 코드가 있어야 작동합니다)
