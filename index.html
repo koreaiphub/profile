@@ -261,7 +261,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 text-center">
                 <h2 class="text-3xl font-bold mb-4">VOD 특허 교육</h2>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-6">특허경영 에반젤리스트 양성 과정을 통해 기업 내부의 지식재산 역량을 극대화하십시오.</p>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-6">특허경영 에반젤리 양성 과정을 통해 기업 내부의 지식재산 역량을 극대화하십시오.</p>
                 <div class="inline-block bg-slate-900 border border-slate-700 rounded-xl p-5 text-sm text-left max-w-2xl text-slate-300 shadow-md">
                     <strong class="text-blue-400 block mb-1">전문 용어 해설: 에반젤리스트(Evangelist)</strong>
                     특정 기술이나 가치의 우수성을 널리 알리고 대중의 인식을 변화시키는 가치 전파 전문가를 의미합니다. 조직 내부에 특허의 중요성과 창출 방법을 전파할 사내 전문가를 양성하는 데 목적이 있습니다.
@@ -335,7 +335,7 @@
                             <div id="content-issue2" class="grid transition-all duration-300 ease-in-out" style="grid-template-rows: 0fr;">
                                 <div class="overflow-hidden">
                                     <div class="px-5 pb-5">
-                                        <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">실력있는 특허사무소라고 해서 그냥 맡겨 놓았더니, 기업의 중장기 사업 방향성이나 경쟁사 동향이 전혀 반영되지 않았습니다. 그 결과 경쟁사가 약간의 기술적 변형만으로도 침해 책임을 쉽게 빠져나갈 수 있는 매우 좁고 방어력이 취약한 권리만 얻게 되었습니다.</p>
+                                        <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">실력있는 특허사무소라고 해서 그냥 맡겨 놓았더니, 기업의 중장기 사업 방향성이나 경쟁사 동향이 전혀 반영되지 않았습니다. 그 결과경쟁사가 약간의 기술적 변형만으로도 침해 책임을 쉽게 빠져나갈 수 있는 매우 좁고 방어력이 취약한 권리만 얻게 되었습니다.</p>
                                         <p class="text-xs font-bold text-slate-900 text-right mt-2">- 플랫폼 서비스 CTO</p>
                                     </div>
                                 </div>
@@ -1004,7 +1004,7 @@
      * 프론트엔드에서는 API 키를 숨기고, 운영 서버의 통신은 Vercel 백엔드를 거칩니다.
      */
     async function fetchGeminiWithRetry(userInput, systemPrompt, modelType, retries = 5) {
-        const isTTS = modelType === 'gemini-1.5-flash-preview-tts';
+        const isTTS = modelType === 'gemini-2.5-flash-preview-tts';
         const isCanvasEnv = window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog');
         
         let url;
@@ -1030,7 +1030,7 @@
         } else {
             // [에러 조치] Vercel 배포 시, 외부 호출이 제한된 프리뷰 모델 대신 안정화 버전으로 전환
             let targetModel = modelType;
-            if (modelType === "gemini-1.5-flash-preview-09-2025") {
+            if (modelType === "gemini-2.5-flash-preview-09-2025") {
                 targetModel = "gemini-1.5-flash"; 
             }
 
@@ -1057,7 +1057,13 @@
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.error || `HTTP 통신 오류 (상태 코드: ${response.status})`);
+                    let errMsg = `HTTP 통신 오류 (상태 코드: ${response.status})`;
+                    if (errorData && errorData.error) {
+                        errMsg = typeof errorData.error === 'string' 
+                            ? errorData.error 
+                            : (errorData.error.message || JSON.stringify(errorData.error));
+                    }
+                    throw new Error(errMsg);
                 }
 
                 return await response.json();
@@ -1106,7 +1112,7 @@
         btn.innerHTML = `<span class="tts-spinner mr-2"></span> 음성 생성 중...`;
 
         try {
-            const data = await fetchGeminiWithRetry(text, "", "gemini-1.5-flash-preview-tts");
+            const data = await fetchGeminiWithRetry(text, "", "gemini-2.5-flash-preview-tts");
             const pcmData = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
             
             if (pcmData) {
