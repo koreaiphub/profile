@@ -1004,7 +1004,7 @@
      * 프론트엔드에서는 API 키를 숨기고, 운영 서버의 통신은 Vercel 백엔드를 거칩니다.
      */
     async function fetchGeminiWithRetry(userInput, systemPrompt, modelType, retries = 5) {
-        const isTTS = modelType === 'gemini-2.5-flash-preview-tts';
+        const isTTS = modelType === 'gemini-1.5-flash-preview-tts';
         const isCanvasEnv = window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog');
         
         let url;
@@ -1030,7 +1030,7 @@
         } else {
             // [에러 조치] Vercel 배포 시, 외부 호출이 제한된 프리뷰 모델 대신 안정화 버전으로 전환
             let targetModel = modelType;
-            if (modelType === "gemini-2.5-flash-preview-09-2025") {
+            if (modelType === "gemini-1.5-flash-preview-09-2025") {
                 targetModel = "gemini-1.5-flash"; 
             }
 
@@ -1106,7 +1106,7 @@
         btn.innerHTML = `<span class="tts-spinner mr-2"></span> 음성 생성 중...`;
 
         try {
-            const data = await fetchGeminiWithRetry(text, "", "gemini-2.5-flash-preview-tts");
+            const data = await fetchGeminiWithRetry(text, "", "gemini-1.5-flash-preview-tts");
             const pcmData = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
             
             if (pcmData) {
