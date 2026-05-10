@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const isTTS = modelType === 'gemini-2.5-flash-preview-tts';
+        const isTTS = modelType === 'gemini-1.5-flash-preview-tts';
         let payload;
 
         // 음성(TTS)과 일반 텍스트 모델의 페이로드 구조 분기
