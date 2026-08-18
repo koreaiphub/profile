@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아이피허브(IPHUB) - 특허경영 오케스트레이션 전문회사</title>
+    <title>아이피허브(IPHUB) - 기술경영 오케스트레이션 전문회사</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -85,11 +85,10 @@
             </div>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#home" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">홈</a>
-                <a href="#ai-assistant" class="nav-link text-slate-600 hover:text-indigo-600 font-medium text-sm transition-colors">AI 특허 어시스턴트</a>
                 <a href="#education" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">VOD 특허 교육</a>
                 <a href="#orchestration" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">오케스트레이션</a>
                 <a href="#strategy" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">핵심 전략</a>
-                <a href="#performance" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">압도적 성과</a>
+                <a href="#performance" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">서비스 성과</a>
                 <a href="#about" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">조직 & 서비스</a>
             </div>
         </div>
@@ -100,167 +99,25 @@
     <section id="home" class="bg-slate-900 text-white pt-24 pb-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col items-center text-center">
-                <p class="text-amber-400 font-bold tracking-wider mb-4">특허경영 오케스트레이션 전문회사</p>
+                <p class="text-amber-400 font-bold tracking-wider mb-4">기술경영 오케스트레이션 전문회사</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-                    내 기술 못베끼게 하는<br><span class="text-blue-400">강력 무기</span> 특허!
+                    기술경영 기반 비즈니스 성장<br><span class="text-blue-400"> 토탈 플랫폼</span> 아이피허브
                 </h1>
                 <p class="mt-4 text-xl text-slate-300 max-w-2xl mx-auto mb-10 break-keep">
-                                        아이피허브는 여러 악기가 모여 하나의 교향곡을 완성하듯, 기업의 사업 목표에 맞추어 특허의 발굴, 기획, 출원, 심사 대응, 사업화 연계 등 전 과정을 유기적으로 조화롭게 지휘하고 관리합니다
+                                        아이피허브는 여러 악기가 모여 하나의 교향곡을 완성하듯, 기술경영 기반 비즈니스 성장이라는 모토하에 기업의 사업 목표에 맞추어 핵심 기술 설계, 기술 자산화(특허획득), 사업화 연계 등 전 과정을 유기적으로 조화롭게 지휘하고 관리합니다
                 </p>
                 <div class="flex justify-center gap-4">
-                    <a href="#orchestration" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg">솔루션 보기</a>
-                    <a href="#ai-assistant" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg">AI 어시스턴트 체험</a>
-                </div>
-            </div>
+                    <a href="#orchestration" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg">솔루션 보기</a>                   
         </div>
     </section>
 
-    <!-- 섹션: AI 특허 어시스턴트 -->
-    <section id="ai-assistant" class="py-20 bg-indigo-50 border-t border-indigo-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">AI 특허 어시스턴트</h2>
-                <p class="text-lg text-slate-600 border-l-4 border-indigo-500 pl-4 mb-4">
-                    아이피허브의 특허 전략가 AI가 비즈니스 아이디어를 진단하고 최적의 대응 논리를 제안합니다.
-                </p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-xl w-full overflow-hidden flex flex-col border border-indigo-200">
-                
-                <div class="p-4 sm:p-5 bg-slate-50 border-b border-slate-200 shadow-inner">
-                    <div class="flex overflow-x-auto custom-scrollbar gap-3 pb-2">
-                        <button id="tab-idea" onclick="switchAITab('idea')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-indigo-600 text-white shadow-md ring-2 ring-indigo-600 ring-offset-2">아이디어 진단</button>
-                        <button id="tab-trademark" onclick="switchAITab('trademark')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">상표 검토</button>
-                        <button id="tab-search" onclick="switchAITab('search')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">선행기술 검색</button>
-                        <button id="tab-draft" onclick="switchAITab('draft')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">명세서 초안</button>
-                        <button id="tab-bypass" onclick="switchAITab('bypass')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">우회 전략 제안</button>
-                        <button id="tab-simul" onclick="switchAITab('simul')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">심사관 시뮬레이션</button>
-                        <button id="tab-value" onclick="switchAITab('value')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">특허 가치 예측기</button>
-                        <button id="tab-estimate" onclick="switchAITab('estimate')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm">견적서 산출</button>
-                        <button id="tab-doc" onclick="switchAITab('doc')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 shadow-sm">특허문서 해설</button>
-                        <button id="tab-qna" onclick="switchAITab('qna')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">미팅 질문 추출</button>
-                        <button id="tab-email" onclick="switchAITab('email')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">업무 이메일 초안</button>
-                        <button id="tab-logic" onclick="switchAITab('logic')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">반박 논리 제안</button>
-                        <button id="tab-scenario" onclick="switchAITab('scenario')" class="whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-white text-slate-600 border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 shadow-sm">대응 시나리오 비교</button>
-                    </div>
-                </div>
-
-                <div class="p-6 overflow-y-auto custom-scrollbar flex-grow bg-white min-h-[400px]">
-                    <div id="view-idea" class="block">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">머릿속에 있는 비즈니스 아이디어나 기술을 편하게 적어주세요. IPHUB의 AI 전략가가 특허화 포인트를 분석해 드립니다.</p>
-                        <textarea id="aiIdeaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 프리랜서 디자이너와 동네 카페를 연결해주고, 블록체인으로 대금을 안전하게 정산하는 플랫폼 모델"></textarea>
-                        <button onclick="requestGemini('idea')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">진단 시작하기</button>
-                    </div>
-
-                    <div id="view-trademark" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">등록하고자 하는 상표명(브랜드명)과 적용할 제품/서비스를 적어주세요. 상표 등록 가능성과 식별력, 유사 상표 존재 위험성을 검토해 드립니다.</p>
-                        <textarea id="aiTrademarkInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 상표명 '애플'을 과일 판매업과 스마트폰 제조에 각각 등록하고 싶습니다."></textarea>
-                        <button onclick="requestGemini('trademark')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">상표 등록 가능성 검토</button>
-                    </div>
-
-                    <div id="view-search" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">발명 내용을 입력하시면 이와 유사한 가상의 선행 특허 문헌 10건을 검색하여 차이점을 분석하고, 실제 데이터베이스에서 활용할 수 있는 검색식을 제안해 드립니다.</p>
-                        <textarea id="aiSearchInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 드론을 이용해 고층 빌딩의 외벽 균열을 자동으로 촬영하고 AI로 분석하는 시스템"></textarea>
-                        <button onclick="requestGemini('search')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">선행기술 검색 시작</button>
-                    </div>
-
-                    <div id="view-draft" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">발명 아이디어를 요약해 주세요. 전문가 수준의 특허 명세서 초안을 구성해 드립니다.</p>
-                        <textarea id="aiDraftInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 스마트폰 자이로 센서를 이용해 거북목 증상을 탐지하고 진동으로 자세 교정을 안내하는 서비스"></textarea>
-                        <button onclick="requestGemini('draft')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">명세서 초안 생성</button>
-                    </div>
-
-                    <div id="view-bypass" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">우리 기술과 유사한 경쟁 기술의 특징을 적어주세요. 이를 피해가는 공격적인 우회 전략을 제안합니다.</p>
-                        <textarea id="aiBypassInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 기존 경쟁사는 수동으로 온도 데이터를 입력하지만, 우리는 센서 데이터를 실시간 연동하여 인공지능이 예측 제어합니다."></textarea>
-                        <button onclick="requestGemini('bypass')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">우회 전략 도출</button>
-                    </div>
-
-                    <div id="view-simul" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">특허청 심사관에게 제출할 의견서 논리를 미리 테스트해보세요. AI 심사관이 타당성을 검증하고 보완점을 짚어드립니다.</p>
-                        <textarea id="aiSimulInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 기존 기술은 규칙 기반으로 사기 결제를 탐지하지만, 우리 기술은 사용자 위치 정보와 생체 인증을 결합한 모델을 사용하여 탐지율을 높였습니다."></textarea>
-                        <button onclick="requestGemini('simul')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">심사관 시뮬레이션 시작</button>
-                    </div>
-
-                    <div id="view-value" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">특허 진행을 포기할까 고민 중이신가요? 핵심 기술을 적어주시면, 등록 성공 시 얻게 될 미래 가치와 매몰 비용 리스크를 분석해 드립니다.</p>
-                        <textarea id="aiValueInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 블록체인 기반의 음원 저작권 수익 분배 플랫폼 기술입니다. 현재 의견서 제출 비용이 부담되어 포기할까 고민 중입니다."></textarea>
-                        <button onclick="requestGemini('value')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">가치 예측 분석하기</button>
-                    </div>
-
-                    <div id="view-estimate" class="hidden">
-                        <p class="text-sm text-slate-600 mb-4 font-medium">특허 출원을 고려 중인 기술 내용이나 규모를 적어주세요. 예상되는 출원, 심사 대응, 등록 단계별 비용 견적서를 산출해 드립니다.</p>
-                        <textarea id="aiEstimateInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none shadow-inner text-sm mb-3" placeholder="예: 개인 발명가이고, 스마트폰 연동 IoT 기기 제어 방법에 대한 BM 특허를 출원하고 싶습니다. 20청구항 내외로 예상됩니다."></textarea>
-                        <button onclick="requestGemini('estimate')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md">예상 견적서 산출하기</button>
-                    </div>
-
-                    <div id="view-doc" class="hidden">
-                        <textarea id="aiDocInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl mb-3" placeholder="해설이 필요한 특허 문서 내용을 입력하세요."></textarea>
-                        <button onclick="requestGemini('doc')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">해설 요청하기</button>
-                    </div>
-
-                    <div id="view-qna" class="hidden">
-                        <textarea id="aiQnaInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl mb-3" placeholder="현재 겪고 있는 문제 상황을 알려주세요."></textarea>
-                        <button onclick="requestGemini('qna')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">질문 추출하기</button>
-                    </div>
-
-                    <div id="view-email" class="hidden">
-                        <textarea id="aiEmailInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl mb-3" placeholder="특허사무소에 보낼 메일의 요지를 적어주세요."></textarea>
-                        <button onclick="requestGemini('email')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">이메일 생성하기</button>
-                    </div>
-
-                    <div id="view-logic" class="hidden">
-                        <textarea id="aiLogicInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl mb-3" placeholder="심사관의 거절 이유와 우리 기술의 차별점을 적어주세요."></textarea>
-                        <button onclick="requestGemini('logic')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">반박 논리 제안받기</button>
-                    </div>
-
-                    <div id="view-scenario" class="hidden">
-                        <textarea id="aiScenarioInput" rows="4" class="w-full px-4 py-3 border border-indigo-200 rounded-xl mb-3" placeholder="받으신 거절 이유의 요지를 적어주세요."></textarea>
-                        <button onclick="requestGemini('scenario')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">시나리오 비교</button>
-                    </div>
-
-                    <div id="aiLoading" class="hidden flex flex-col items-center justify-center py-8">
-                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mb-4"></div>
-                        <p class="text-indigo-800 font-bold text-sm animate-pulse">AI가 데이터를 심층 분석하고 있습니다...</p>
-                    </div>
-
-                    <div id="aiResultArea" class="hidden mt-6 bg-slate-50 border border-indigo-100 rounded-xl p-6 shadow-sm">
-                        <div class="flex items-center justify-between mb-4 border-b border-slate-200 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">AI 분석 결과</span>
-                                <button id="ttsBtn" onclick="playAIResultTTS()" class="text-xs text-indigo-700 font-bold flex items-center gap-1 hover:text-indigo-900 transition-colors border border-indigo-200 px-2 py-1 rounded bg-white">
-                                    음성 브리핑 듣기
-                                </button>
-                            </div>
-                            <button onclick="copyToClipboard()" class="text-xs text-indigo-600 font-bold flex items-center gap-1 hover:text-indigo-800 transition-colors">
-                                복사
-                            </button>
-                        </div>
-                        <div id="aiResultText" class="text-sm text-slate-700 ai-result-content"></div>
-                        <div class="mt-8 pt-5 border-t border-slate-200 text-center">
-                            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                                <button onclick="downloadAIResult()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
-                                    텍스트(.txt)로 저장
-                                </button>
-                                <button onclick="openAILeadModal()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
-                                    결과 리포트 이메일로 받기
-                                </button>
-                            </div>
-                            <p class="text-xs text-slate-500 text-center mb-4">본 분석은 AI 기반 초안이며, 법적 효력을 갖지 않습니다. 정확한 진단은 아이피허브 전문가와 상담하세요.</p>
-                            <button onclick="openDiagnosisFromAI()" class="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3 px-4 rounded-xl transition-all">IPHUB 전문가에게 무료 정밀 진단받기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- 섹션: VOD 특허 교육 -->
     <section id="education" class="py-20 bg-slate-800 text-white border-t border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 text-center">
                 <h2 class="text-3xl font-bold mb-4">VOD 특허 교육</h2>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-6">특허경영 에반젤리스트 양성 과정을 통해 기업 내부의 지식재산 역량을 극대화하십시오.</p>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-6">기술경영 에반젤리스트 양성 과정을 통해 기업 내부의 지식재산 역량을 극대화하십시오.</p>
                 <div class="inline-block bg-slate-900 border border-slate-700 rounded-xl p-5 text-sm text-left max-w-2xl text-slate-300 shadow-md">
                     <strong class="text-blue-400 block mb-1">전문 용어 해설: 에반젤리스트(Evangelist)</strong>
                     특정 기술이나 가치의 우수성을 널리 알리고 대중의 인식을 변화시키는 가치 전파 전문가를 의미합니다. 조직 내부에 특허의 중요성과 창출 방법을 전파할 사내 전문가를 양성하는 데 목적이 있습니다.
@@ -414,12 +271,12 @@
 
             <div class="grid lg:grid-cols-2 gap-12 items-start">
                 <div class="flex flex-col h-full">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-2">특허경영 오케스트레이션 체계</h3>
-                    <p class="text-sm text-slate-600 mb-4">아이피허브가 기업과 특허사무소 사이에서 기술과 법률의 언어 장벽 해소하고 최적의 화음을 조율합니다.</p>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-2">기술경영 오케스트레이션 체계</h3>
+                    <p class="text-sm text-slate-600 mb-4">아이피허브가 기업과 특허사무소간에 기술과 법률의 언어 장벽 해소하고 최적의 화음을 조율합니다.</p>
                     
                     <div class="bg-slate-50 rounded-xl border border-slate-200 p-8 flex flex-col items-center justify-center flex-grow shadow-inner">
                         <div class="w-full bg-white border-2 border-slate-300 rounded-lg p-5 text-center shadow-sm relative z-10 animate-on-scroll">
-                            <h4 class="font-bold text-slate-800 text-lg">고객사 (스타트업/중소벤처기업)</h4>
+                            <h4 class="font-bold text-slate-800 text-lg">기업 (스타트업/중소벤처기업)</h4>
                             <p class="text-sm text-slate-500 mt-2">비즈니스 목표 설정 및 원천 기술(아이디어) 제공</p>
                         </div>
                         <div class="flex items-center justify-center h-10 w-full relative animate-on-scroll">
@@ -427,12 +284,12 @@
                             <div class="absolute bg-slate-50 px-2 text-blue-500 text-xs font-bold rounded">원활한 소통 지원</div>
                         </div>
                         <div class="w-full bg-blue-600 border-2 border-blue-700 rounded-lg p-6 text-center shadow-md relative z-10 transform scale-105 animate-on-scroll">
-                            <h4 class="font-bold text-white text-xl">아이피허브 (특허경영 지휘)</h4>
+                            <h4 class="font-bold text-white text-xl">아이피허브 (기술경영 지휘)</h4>
                             <p class="text-sm text-blue-100 mt-2">기술 ↔ 법률 언어 통번역 및 전체 전략 지휘·통제</p>
                             <div class="flex flex-wrap justify-center gap-2 mt-4 text-xs font-bold text-blue-800">
                                 <span class="bg-white px-3 py-1.5 rounded shadow-sm">비즈니스 진단</span>
-                                <span class="bg-white px-3 py-1.5 rounded shadow-sm">회피 설계 기획</span>
-                                <span class="bg-white px-3 py-1.5 rounded shadow-sm">명세서 품질 검증</span>
+                                <span class="bg-white px-3 py-1.5 rounded shadow-sm">핵심 기술 설계</span>
+                                <span class="bg-white px-3 py-1.5 rounded shadow-sm">특허 품질 검증</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-center h-10 w-full relative animate-on-scroll">
@@ -445,24 +302,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="flex flex-col h-full">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-2">고객의 부담을 최소화하다</h3>
-                    <p class="text-sm text-slate-600 mb-4">복잡한 31단계 프로세스는 아이피허브가 전담합니다. 고객은 핵심 의사결정에만 집중하십시오.</p>
-                    <div class="bg-white shadow-sm rounded-xl border border-slate-200 overflow-hidden flex-grow">
-                        <table class="w-full text-left border-collapse text-sm h-full">
-                            <thead class="bg-slate-800 text-white">
-                                <tr><th class="p-4 font-bold">진행 단계</th><th class="p-4 font-bold w-1/3">고객 (실무진)</th><th class="p-4 font-bold">아이피허브</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr class="hover:bg-slate-50 border-b border-slate-200"><td class="p-4 font-bold text-slate-800">1. 기획/발굴</td><td class="p-4 text-slate-600">아이디어 공유</td><td class="p-4 bg-blue-50/50 font-medium text-blue-800">비즈니스 진단, 특허 목표 수립, 선행조사, 회피설계</td></tr>
-                                <tr class="hover:bg-slate-50 border-b border-slate-200"><td class="p-4 font-bold text-slate-800">2. 특허 출원</td><td class="p-4 text-slate-600">명세서 최종 확인</td><td class="p-4 bg-blue-50/50 font-medium text-blue-800">명세서 작성/수정, 출원 절차 지휘 및 검토</td></tr>
-                                <tr class="hover:bg-slate-50 border-b border-slate-200"><td class="p-4 font-bold text-slate-800">3. 심사 대응</td><td class="p-4 text-slate-600">대응 방향 결정</td><td class="p-4 bg-blue-50/50 font-medium text-blue-800">통지서 분석, 대응 논리 개발, 보정서 작성 지휘</td></tr>
-                                <tr class="hover:bg-slate-50"><td class="p-4 font-bold text-slate-800">4. 등록 완료</td><td class="p-4 text-slate-600">사업화 연계</td><td class="p-4 bg-blue-50/50 font-medium text-blue-800">결정서 수령, 등록료 납부 지휘, 사후 관리</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+              
             </div>
         </div>
     </section>
@@ -495,7 +335,7 @@
                             </div>
                             <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden transition-all duration-300">
                                 <button onclick="toggleAccordion('strat2', 'strat')" class="w-full text-left p-5 font-bold flex justify-between items-center hover:bg-slate-100 transition-colors">
-                                    <div class="flex items-center gap-4"><div class="w-10 h-10 bg-blue-100 text-blue-800 flex items-center justify-center rounded-lg text-xl font-black">2</div><span class="text-lg font-bold">비즈니스 모델(BM) 특허 발굴 및 권리화</span></div>
+                                    <div class="flex items-center gap-4"><div class="w-10 h-10 bg-blue-100 text-blue-800 flex items-center justify-center rounded-lg text-xl font-black">2</div><span class="text-lg font-bold">비즈니스 모델(BM) 핵심 기술 설계 및 기술 자산회</span></div>
                                     <span id="icon-strat2" class="transform transition-transform duration-200 text-slate-400">▼</span>
                                 </button>
                                 <div id="content-strat2" class="grid transition-all duration-300 ease-in-out" style="grid-template-rows: 0fr;">
@@ -562,21 +402,8 @@
     <!-- 섹션: 압도적 성과 -->
     <section id="performance" class="py-20 bg-white border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-slate-900 mb-16">수치로 증명하는 압도적 성과</h2>
-            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
-                <div>
-                    <h3 class="text-2xl font-bold mb-6">대한민국 평균을 뛰어넘는 등록률</h3>
-                    <p class="text-slate-600 mb-6">아이피허브는 분야별 변리사와 엔지니어로 구성된 전문 조직을 투입하여 최상의 결과를 만들어냅니다.</p>
-                    <ul class="space-y-4 mb-8 text-slate-700">
-                        <li>일반 특허 등록률 <strong class="text-blue-700 text-xl">95%</strong> (국가 평균 65%)</li>
-                        <li>AI 분야 특허 등록률 <strong class="text-blue-700 text-xl">100%</strong> (국가 평균 59%)</li>
-                    </ul>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-2xl shadow-md border border-slate-100">
-                    <div class="chart-container"><canvas id="registrationRateChart"></canvas></div>
-                </div>
-            </div>
-            
+            <h2 class="text-3xl font-bold text-slate-900 mb-16">서비스 성과</h2>
+           
             <div class="mb-20">
                 <h3 class="text-2xl font-bold mb-6 border-l-4 border-blue-500 pl-3">서비스 도입 기업 사례</h3>
                 <div class="grid md:grid-cols-3 gap-6 items-start">
@@ -753,7 +580,7 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div class="bg-slate-700/50 p-5 rounded-xl border border-slate-600">
                         <div class="font-bold text-blue-400 mb-2 border-b border-slate-600 pb-2">ICT.AI 팀</div>
-                        <p class="text-xs text-slate-300 mb-3 font-medium">구성: 변리사 2명 / 엔지니어 4명</p>
+                       
                         <ul class="text-sm text-slate-300 space-y-1 list-none pl-0">
                             <li><strong class="text-slate-100">ICT, BM:</strong> 메타버스, 물류, 헬스케어 등</li>
                             <li><strong class="text-slate-100">인공지능:</strong> 강화학습, BERT, 자연어처리</li>
@@ -763,7 +590,7 @@
                     
                     <div class="bg-slate-700/50 p-5 rounded-xl border border-slate-600">
                         <div class="font-bold text-emerald-400 mb-2 border-b border-slate-600 pb-2">바이오.화학 팀</div>
-                        <p class="text-xs text-slate-300 mb-3 font-medium">구성: 변리사 2명 / 엔지니어 1명</p>
+                    
                         <ul class="text-sm text-slate-300 space-y-1 list-none pl-0">
                             <li><strong class="text-slate-100">바이오:</strong> 유전자, 미생물, 건강기능식품</li>
                             <li><strong class="text-slate-100">화학:</strong> 전지, 화학공정, 재료, 화장품</li>
@@ -772,13 +599,13 @@
 
                     <div class="bg-slate-700/50 p-5 rounded-xl border border-slate-600">
                         <div class="font-bold text-amber-400 mb-2 border-b border-slate-600 pb-2">기계.기구 팀</div>
-                        <p class="text-xs text-slate-300 mb-3 font-medium">구성: 변리사 2명 / 엔지니어 2명</p>
+                       
                         <p class="text-sm text-slate-300">정밀 기계, 기구 설계, 자동화 설비 분야 전문 분석 및 명세 작성</p>
                     </div>
 
                     <div class="bg-slate-700/50 p-5 rounded-xl border border-slate-600">
                         <div class="font-bold text-purple-400 mb-2 border-b border-slate-600 pb-2">상표.디자인.저작권 팀</div>
-                        <p class="text-xs text-slate-300 mb-3 font-medium">구성: 변리사 2명 / 엔지니어 2명</p>
+                        
                         <p class="text-sm text-slate-300">브랜드 보호 전략 수립 및 국내외 디자인/저작권 침해 방지 컨설팅</p>
                     </div>
                 </div>
@@ -797,12 +624,12 @@
             </div>
 
             <div class="mb-16">
-                <h3 class="text-2xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-3">특허경영 지휘자, 이병돈 대표</h3>
+                <h3 class="text-2xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-3">기술경영 지휘자, 이병돈 대표</h3>
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
                     <div class="grid lg:grid-cols-2 gap-12">
                         <div>
                             <h4 class="text-3xl font-bold text-white mb-2">이병돈 대표</h4>
-                            <p class="text-blue-400 font-medium mb-8">아이피허브 대표 / 한국IP허브센터 대표 / 특허경영 에반젤리스트</p>
+                            <p class="text-blue-400 font-medium mb-8">아이피허브 대표 / 한국IP허브센터 대표 / 기술경영 에반젤리스트</p>
                             
                             <div class="space-y-6 text-sm text-slate-300">
                                 <div>
@@ -848,7 +675,7 @@
                     <div class="mb-6">
                         <h4 class="text-blue-300 font-bold mb-2">1. 서비스 방식</h4>
                         <ul class="space-y-2 text-slate-300 text-sm pl-4 list-disc marker:text-blue-500">
-                            <li><strong class="text-white">기본 오케스트레이션:</strong> 특허 발굴부터 선행기술조사, 등록까지 일괄 진행</li>
+                            <li><strong class="text-white">기본 오케스트레이션:</strong> 핵심기술 설계, 기술 자산화(특허획득)까지 일괄 진행</li>
                             <li><strong class="text-white">심화 오케스트레이션:</strong> 기술 사업화, 경쟁사 분석 등 특정 목적 달성형 프로젝트</li>
                         </ul>
                     </div>
@@ -861,7 +688,7 @@
 
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 flex flex-col justify-center">
                     <h3 class="text-xl font-bold text-white mb-4">문의하기</h3>
-                    <p class="text-slate-400 text-sm mb-6 font-serif italic">"우리는 특허를 어떻게 설계하고, 어떻게 사업과 연결할 것인가를 늘 생각합니다."</p>
+                    <p class="text-slate-400 text-sm mb-6 font-serif italic">"우리는 핵심기술을 어떻게 설계하고, 어떻게 사업과 연결할 것인가를 늘 생각합니다."</p>
                     <div class="space-y-3 text-slate-300 font-medium text-sm">
                         <p class="flex items-center"><span class="w-20 text-slate-400 font-bold">[주소]</span> 서울시 강남구 테헤란로 625 덕명빌딩 17층</p>
                         <p class="flex items-center"><span class="w-20 text-slate-400 font-bold">[이메일]</span> siphub@gmail.com</p>
@@ -895,7 +722,7 @@
 <div id="diagnosisModal" class="fixed inset-0 z-[130] hidden flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm transition-opacity">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-            <h3 class="text-xl font-bold text-slate-900">무료 비즈니스(특허) 진단 신청</h3>
+            <h3 class="text-xl font-bold text-slate-900">무료 비즈니스(핵심 기술) 진단 신청</h3>
             <button id="closeDiagnosisBtn" class="text-slate-400 text-2xl font-bold leading-none">&times;</button>
         </div>
         
@@ -928,7 +755,7 @@
                         <option value="선행기술 조사">선행기술 조사</option>
                         <option value="특허전략 보고서">특허전략 보고서</option>
                         <option value="침해 분석">침해 분석</option>
-                        <option value="특허 발굴/출원">특허 발굴/출원</option>
+                        <option value="핵심 기술 설계/특허 권리화">핵심 기술 설계/특허 권리화</option>
                         <option value="BM 특허">BM 특허</option>
                         <option value="임직원 교육">임직원 교육</option>
                     </select>
@@ -959,7 +786,7 @@
             <button onclick="closeAILeadModal()" class="text-slate-400 text-2xl font-bold leading-none hover:text-slate-600 transition-colors">&times;</button>
         </div>
         <div class="p-6">
-            <p class="text-sm text-slate-600 mb-6">고객님의 소중한 아이디어와 AI 진단 결과를 안전하게 보관하기 위해, 입력하신 <strong>이메일 주소로 리포트 전문을 발송</strong>해 드립니다.</p>
+            <p class="text-sm text-slate-600 mb-6">고객님의 소중한 아이디어와 진단 결과를 안전하게 보관하기 위해, 입력하신 <strong>이메일 주소로 리포트 전문을 발송</strong>해 드립니다.</p>
             <form id="aiLeadForm" class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">기업명 (선택)</label>
@@ -1334,22 +1161,7 @@
             });
         });
 
-        // 3. 차트 초기화
-        const chartCanvas = document.getElementById('registrationRateChart');
-        if (chartCanvas) {
-            new Chart(chartCanvas, {
-                type: 'bar',
-                data: {
-                    labels: ['일반 특허', 'AI 특허'],
-                    datasets: [
-                        { label: '아이피허브', data: [95, 100], backgroundColor: '#2563eb' }, 
-                        { label: '평균', data: [65, 59], backgroundColor: '#cbd5e1' }
-                    ]
-                },
-                options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-        }
-
+        
         // 4. 유튜브 동영상 팝업 및 콘텐츠 세팅
         const columnData = [
             { title: "핀포인트뉴스 특허전략", summary: "스타트업 특허 트렌드 가이드", url: "https://www.pinpointnews.co.kr/news/articleList.html?sc_area=A&view_type=sm&sc_word=%EC%95%84%EC%9D%B4%ED%94%BC%ED%97%88%EB%B8%8C" },
