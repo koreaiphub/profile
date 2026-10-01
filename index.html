@@ -79,19 +79,129 @@
 
 <nav class="fixed w-full z-50 bg-white/90 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+
+        <!-- 상단 네비게이션 -->
+        <div class="flex justify-between items-center h-16">
+
+            <!-- 로고 -->
             <div class="flex items-center">
-                <span class="text-2xl font-black text-orange-600 tracking-tighter">IPHUB</span>
+                <a href="#home"
+                   class="text-2xl font-black text-orange-600 tracking-tighter">
+                    IPHUB
+                </a>
             </div>
+
+            <!-- PC 메뉴 -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">홈</a>
-                <a href="#about" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">조직 & 서비스</a>
-                <a href="#orchestration" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">오케스트레이션</a>
-                <a href="#strategy" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">핵심 전략</a>
-                <a href="#performance" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">서비스 성과</a>
-                <a href="#education" class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">VOD 특허 교육</a>
+                <a href="#home"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    홈
+                </a>
+
+                <a href="#about"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    조직 & 서비스
+                </a>
+
+                <a href="#orchestration"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    오케스트레이션
+                </a>
+
+                <a href="#strategy"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    핵심 전략
+                </a>
+
+                <a href="#performance"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    서비스 성과
+                </a>
+
+                <a href="#education"
+                   class="nav-link text-slate-600 hover:text-blue-600 font-medium text-sm transition-colors">
+                    VOD 특허 교육
+                </a>
+            </div>
+
+            <!-- 모바일 햄버거 버튼 -->
+            <button
+                id="mobile-menu-button"
+                type="button"
+                class="md:hidden flex items-center justify-center
+                       w-10 h-10 rounded-lg
+                       text-slate-700 hover:bg-slate-100
+                       focus:outline-none"
+                aria-label="메뉴 열기"
+                aria-expanded="false"
+            >
+                <!-- 햄버거 아이콘 -->
+                <svg id="menu-icon"
+                     xmlns="http://www.w3.org/2000/svg"
+                     class="h-7 w-7"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+        </div>
+
+        <!-- 모바일 메뉴 -->
+        <div id="mobile-menu"
+             class="hidden md:hidden border-t border-slate-200 bg-white">
+
+            <div class="flex flex-col py-3">
+
+                <a href="#home"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    홈
+                </a>
+
+                <a href="#about"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    조직 & 서비스
+                </a>
+
+                <a href="#orchestration"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    오케스트레이션
+                </a>
+
+                <a href="#strategy"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    핵심 전략
+                </a>
+
+                <a href="#performance"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    서비스 성과
+                </a>
+
+                <a href="#education"
+                   class="mobile-nav-link px-4 py-3
+                          text-slate-700 hover:text-blue-600
+                          hover:bg-slate-50 font-medium">
+                    VOD 특허 교육
+                </a>
+
             </div>
         </div>
+
     </div>
 </nav>
 
@@ -1344,6 +1454,30 @@
                 }
             });
         }
+    });
+</script>
+                    <script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    mobileMenuButton.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+
+        const isOpen = !mobileMenu.classList.contains('hidden');
+
+        mobileMenuButton.setAttribute(
+            'aria-expanded',
+            isOpen ? 'true' : 'false'
+        );
+    });
+
+    // 모바일 메뉴에서 항목을 누르면 메뉴 자동 닫기
+    mobileNavLinks.forEach(function(link) {
+        link.addEventListener('click', function () {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        });
     });
 </script>
 </body>
